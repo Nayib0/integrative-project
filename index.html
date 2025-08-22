@@ -3,169 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/stylos.css">
+    <title>LEARNEX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#667eea',
+                        secondary: '#764ba2'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .screen { display: none !important; }
+        .screen.active { display: flex !important; }
+    </style>
 </head>
 <body>
     <div id="app">
         <!-- Login Screen -->
-        <div id="login-screen" class="screen active">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-                        <div class="login-container card">
-                            <div class="login-header text-center">
-                                <h2><i class="fas fa-graduation-cap"></i> CodeUp Riwi</h2>
-                                <p>Sistema de Gestión Académica</p>
-                            </div>
-                            <form id="login-form" class="login-form">
-                                <div class="form-group">
-                                    <label for="email">Email:</label>
-                                    <input type="email" id="email" name="email" required class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="password">Contraseña:</label>
-                                    <input type="password" id="password" name="password" required class="form-control">
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-block">
-                                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-                                </button>
-                            </form>
-                            <div class="login-footer text-center">
-                                <p>¿No tienes cuenta? <a href="/register" id="show-register">Regístrate aquí</a></p>
-                                <button type="button" id="load-sample-data" class="btn btn-secondary btn-sm mt-2">
-                                    📦 Cargar Datos de Prueba
-                                </button>
-                            </div>
+        <div id="login-screen" class="screen active min-h-screen bg-gradient-to-br from-primary to-secondary flex items-center justify-center p-5">
+            <div class="w-full max-w-md">
+                <div class="bg-white p-10 rounded-2xl shadow-2xl">
+                    <div class="text-center mb-8">
+                        <h2 class="text-4xl font-bold text-primary mb-2">
+                            <i class="fas fa-graduation-cap"></i> LEARNEX
+                        </h2>
+                        <p class="text-gray-600">Sistema de Gestión Académica</p>
+                    </div>
+                    <form id="login-form" class="space-y-5">
+                        <div>
+                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email:</label>
+                            <input type="email" id="email" name="email" required 
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors">
                         </div>
+                        <div>
+                            <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Contraseña:</label>
+                            <input type="password" id="password" name="password" required 
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors">
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-lg font-semibold hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                        </button>
+                    </form>
+                    <div class="text-center mt-6">
+                        <p class="text-gray-600">¿No tienes cuenta? <a href="/register" id="show-register" class="text-primary hover:underline">Regístrate aquí</a></p>
+                        <button type="button" id="load-sample-data" class="mt-3 px-4 py-2 bg-gray-500 text-white text-sm rounded-lg hover:bg-gray-600 transition-colors">
+                            📦 Cargar Datos de Prueba
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Pantalla de Registro -->
-        <div id="register-screen" class="screen">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-12 col-sm-10 col-md-8 col-lg-6">
-                        <div class="register-container card">
-                            <div class="register-header text-center">
-                                <h2><i class="fas fa-user-plus"></i> Registro de Usuario</h2>
-                                <a href="/login" id="back-to-login" class="btn btn-secondary btn-sm mobile-hide">
-                                    <i class="fas fa-arrow-left"></i> Volver al Login
-                                </a>
-                            </div>
-                            <form id="register-form" class="register-form">
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="reg-name">Nombre Completo:</label>
-                                            <input type="text" id="reg-name" name="name" required class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="reg-email">Email:</label>
-                                            <input type="email" id="reg-email" name="email" required class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="reg-password">Contraseña:</label>
-                                            <input type="password" id="reg-password" name="password" required class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="reg-role">Rol:</label>
-                                            <select id="reg-role" name="role" required class="form-control">
-                                                <option value="">Seleccionar rol</option>
-                                                <option value="student">Estudiante</option>
-                                                <option value="teacher">Profesor</option>
-                                                <option value="admin">Administrador</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group text-center">
-                                    <button type="submit" class="btn btn-primary btn-block">
-                                        <i class="fas fa-user-plus"></i> Registrarse
-                                    </button>
-                                    <a href="/login" id="back-to-login-mobile" class="btn btn-secondary btn-block mobile-show mt-2">
-                                        <i class="fas fa-arrow-left"></i> Volver al Login
-                                    </a>
-                                </div>
-                            </form>
-                        </div>
+        <!-- Register Screen -->
+        <div id="register-screen" class="screen min-h-screen bg-gradient-to-br from-primary to-secondary flex items-center justify-center p-5">
+            <div class="w-full max-w-lg">
+                <div class="bg-white p-10 rounded-2xl shadow-2xl">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-bold text-primary mb-4">
+                            <i class="fas fa-user-plus"></i> Registro de Usuario
+                        </h2>
+                        <button id="back-to-login" class="px-4 py-2 bg-gray-500 text-white text-sm rounded-lg hover:bg-gray-600 transition-colors">
+                            <i class="fas fa-arrow-left"></i> Volver al Login
+                        </button>
                     </div>
+                    <form id="register-form" class="space-y-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="reg-name" class="block text-sm font-semibold text-gray-700 mb-2">Nombre Completo:</label>
+                                <input type="text" id="reg-name" name="name" required 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label for="reg-email" class="block text-sm font-semibold text-gray-700 mb-2">Email:</label>
+                                <input type="email" id="reg-email" name="email" required 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="reg-password" class="block text-sm font-semibold text-gray-700 mb-2">Contraseña:</label>
+                                <input type="password" id="reg-password" name="password" required 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label for="reg-role" class="block text-sm font-semibold text-gray-700 mb-2">Rol:</label>
+                                <select id="reg-role" name="role" required 
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors">
+                                    <option value="">Seleccionar rol</option>
+                                    <option value="student">Estudiante</option>
+                                    <option value="teacher">Profesor</option>
+                                    <option value="admin">Administrador</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="text-center space-y-3">
+                            <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-lg font-semibold hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                                <i class="fas fa-user-plus"></i> Registrarse
+                            </button>
+                            <button type="button" id="back-to-login-mobile" class="w-full px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors md:hidden">
+                                <i class="fas fa-arrow-left"></i> Volver al Login
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
 
-        <!-- Dashboard Principal -->
-        <div id="dashboard-screen" class="screen">
-            <nav class="navbar">
-                <div class="nav-brand">
-
-                    <h2><i class="fas fa-graduation-cap"></i> <span class="mobile-hide">CodeUp Riwi</span></h2>
-                </div>
-                <div class="nav-user">
-                    <div class="user-info mobile-hide">
-                        <span id="user-name" class="user-name">Usuario</span>
-                        <span id="user-role" class="user-role">Rol</span>
+        <!-- Dashboard Screen -->
+        <div id="dashboard-screen" class="screen min-h-screen bg-gray-50 flex-col">
+            <nav class="bg-white shadow-lg px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold text-primary">
+                            <i class="fas fa-graduation-cap"></i> LEARNEX
+                        </h2>
                     </div>
-                    <button id="logout-btn" class="btn btn-outline">
-                        <i class="fas fa-sign-out-alt"></i> <span class="mobile-hide">Cerrar Sesión</span>
-                    </button>
+                    <div class="flex items-center space-x-4">
+                        <span id="user-name" class="font-semibold text-gray-700">Usuario</span>
+                        <span id="user-role" class="px-3 py-1 bg-primary text-white text-sm rounded-full">Rol</span>
+                        <button id="logout-btn" class="px-4 py-2 border-2 border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </button>
+                    </div>
                 </div>
             </nav>
-             <div class="dashboard-container">
-                <aside class="sidebar" id="sidebar">
-
-                    <ul class="nav-menu">
-                        <li><a href="/dashboard" data-section="dashboard" class="nav-link active">
-                            <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
-                        </a></li>
-                        <li><a href="/subjects" data-section="subjects" class="nav-link">
-                            <i class="fas fa-book"></i> <span>Materias</span>
-                        </a></li>
-                        <li><a href="/grades" data-section="grades" class="nav-link">
-                            <i class="fas fa-chart-line"></i> <span>Notas</span>
-                        </a></li>
-                        <li><a href="/reports" data-section="reports" class="nav-link">
-                            <i class="fas fa-file-alt"></i> <span>Reportes</span>
-                        </a></li>
-                        <li><a href="/users" data-section="users" class="nav-link admin-only">
-                            <i class="fas fa-users"></i> <span>Usuarios</span>
-                        </a></li>
-                        <li><a href="/messages" data-section="messages" class="nav-link">
-                            <i class="fas fa-comments"></i> <span>Mensajes</span>
-                        </a></li>
-                        <li><a href="/schedules" data-section="schedules" class="nav-link">
-                            <i class="fas fa-calendar"></i> <span>Horarios</span>
-                        </a></li>
-                        <li><a href="/attendance" data-section="attendance" class="nav-link teacher-only admin-only">
-                            <i class="fas fa-check-circle"></i> <span>Asistencia</span>
-                        </a></li>
-                        <li><a href="/assignments" data-section="assignments" class="nav-link">
-                            <i class="fas fa-tasks"></i> <span>Tareas</span>
-                        </a></li>
-                    </ul>
-
-                </aside>
-
-                <div class="sidebar-overlay" id="sidebar-overlay"></div>
-
-                <main class="main-content">
-                    <div class="container-fluid">
-                        <div id="content-area">
-                            <!-- El contenido se cargará dinámicamente aquí -->
-                        </div>
-                    </div>
-                </main>
-            </div>
+            <main class="p-6">
+                <div id="content-area" class="bg-white rounded-xl shadow-lg p-8 min-h-96">
+                    <!-- Dashboard content -->
+                </div>
+            </main>
         </div>
     </div>
     <script src="./backend/js/login.js"></script>

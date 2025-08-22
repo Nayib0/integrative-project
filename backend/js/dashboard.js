@@ -1,4 +1,4 @@
-// Sistema de Dashboard
+// Dashboard system
 class Dashboard {
     constructor() {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -248,7 +248,6 @@ class Dashboard {
     }
 }
 
-// Inicializar dashboard cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     window.dashboard = new Dashboard();
 });

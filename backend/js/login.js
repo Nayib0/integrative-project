@@ -1,4 +1,4 @@
-// Sistema de login y navegación entre pantallas
+// Login system and navigation
 class LoginSystem {
     constructor() {
         this.users = JSON.parse(localStorage.getItem('users')) || [];
@@ -61,7 +61,7 @@ class LoginSystem {
     }
 }
 
-// Funciones globales para navegación
+// Funtions for navegation
 function showScreen(screenName) {
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.remove('active');
@@ -70,11 +70,11 @@ function showScreen(screenName) {
 }
 
 function showMessage(message, type = 'info') {
-    // Remover alertas existentes
+    // Remove alerts
     const existingAlerts = document.querySelectorAll('.alert');
     existingAlerts.forEach(alert => alert.remove());
 
-    // Crear nueva alerta
+    // Create alerts
     const alert = document.createElement('div');
     alert.className = `alert alert-${type}`;
     alert.innerHTML = `
@@ -84,7 +84,6 @@ function showMessage(message, type = 'info') {
 
     document.body.appendChild(alert);
 
-    // Auto-remover después de 5 segundos
     setTimeout(() => {
         if (alert.parentElement) {
             alert.remove();
@@ -92,7 +91,6 @@ function showMessage(message, type = 'info') {
     }, 5000);
 }
 
-// Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     window.loginSystem = new LoginSystem();
 });

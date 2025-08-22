@@ -1,4 +1,4 @@
-// Sistema de registro
+// Register system
 class RegisterSystem {
     constructor() {
         this.users = JSON.parse(localStorage.getItem('users')) || [];
@@ -79,7 +79,7 @@ class RegisterSystem {
 
 }
 
-// Inicializar cuando el DOM esté listo
+// starting DOM
 document.addEventListener('DOMContentLoaded', () => {
     window.registerSystem = new RegisterSystem();
 });
