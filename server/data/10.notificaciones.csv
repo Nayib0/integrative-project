@@ -1,0 +1,3 @@
+id_notificacion;id_usuario;mensaje;tipo;fecha_envio
+1;1;Tienes un nuevo reporte;recordatorio;2025-08-18
+2;3;Revisión pendiente de calificaciones;alerta;2025-08-19

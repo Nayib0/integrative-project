@@ -1,0 +1,5 @@
+id_nota;id_evaluacion;id_estudiante;calificacion;fecha_registro;metodo_ingreso
+1;1;1;3,5;2025-08-01;manual
+2;1;2;4;2025-08-01;excel
+3;2;5;3,8;2025-08-15;manual
+4;2;6;4,2;2025-08-15;excel

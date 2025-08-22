@@ -1,0 +1,3 @@
+id_reporte;id_estudiante;id_curso;promedio_general;estado;fecha_generacion;exportado
+1;1;1;3,75;aprobado;2025-08-20;PDF
+2;5;2;4;aprobado;2025-08-20;Excel

@@ -1,0 +1,4 @@
+id_rol;nombre;descripcion
+1;Administrador;Superusuario del sistema
+2;Profesor;Encargado de asignaturas
+3;Estudiante;Alumno del colegio
