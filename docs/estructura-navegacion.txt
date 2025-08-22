@@ -1,0 +1,18 @@
+Login Page
+  ↓
+Dashboard
+├── Admin Dashboard
+│   ├── Users
+│   ├── Subjects
+│   ├── Reports
+│   └── Settings
+├── Teacher Dashboard
+│   ├── My Subjects
+│   ├── Grades
+│   ├── Attendance
+│   └── Tasks
+└── Student Dashboard
+    ├── My Grades
+    ├── Subjects
+    ├── Tasks
+    └── Schedule
