@@ -1,147 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEARNEX</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#667eea',
-                        secondary: '#764ba2'
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .screen { display: none !important; }
-        .screen.active { display: flex !important; }
-    </style>
+    <title>LearnEx - Beta prototype</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/modern-interface.css">
+    <link rel="stylesheet" href="css/enterprise-styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/loading.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <!-- Login Screen -->
-        <div id="login-screen" class="screen active min-h-screen bg-gradient-to-br from-primary to-secondary flex items-center justify-center p-5">
-            <div class="w-full max-w-md">
-                <div class="bg-white p-10 rounded-2xl shadow-2xl">
-                    <div class="text-center mb-8">
-                        <h2 class="text-4xl font-bold text-primary mb-2">
-                            <i class="fas fa-graduation-cap"></i> LEARNEX
-                        </h2>
-                        <p class="text-gray-600">Sistema de Gestión Académica</p>
+    <!-- Login screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>LearnEx</h1>
+                    <p>Beta Prototype - Educational Platform</p>
+                </div>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="Usuario" required>
                     </div>
-                    <form id="login-form" class="space-y-5">
-                        <div>
-                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email:</label>
-                            <input type="email" id="email" name="email" required 
-                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors">
-                        </div>
-                        <div>
-                            <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Contraseña:</label>
-                            <input type="password" id="password" name="password" required 
-                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors">
-                        </div>
-                        <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-lg font-semibold hover:shadow-lg hover:-translate-y-0.5 transition-all">
-                            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-                        </button>
-                    </form>
-                    <div class="text-center mt-6">
-                        <p class="text-gray-600">¿No tienes cuenta? <a href="/register" id="show-register" class="text-primary hover:underline">Regístrate aquí</a></p>
-                        <button type="button" id="load-sample-data" class="mt-3 px-4 py-2 bg-gray-500 text-white text-sm rounded-lg hover:bg-gray-600 transition-colors">
-                            📦 Cargar Datos de Prueba
-                        </button>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Contraseña" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+                <div class="demo-users">
+                    <div style="margin-top: 15px; font-size: 12px; color: #666; text-align: center;">
+                        <p><strong>Only access with valid credentials</strong></p>
+                        <p>admin/admin123 | teacher/teacher123</p>
+                        <p>student/student123 | parent/parent123</p>
+                        <button onclick="runQuickTests()" style="background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 10px;">🧪 Tests</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Register Screen -->
-        <div id="register-screen" class="screen min-h-screen bg-gradient-to-br from-primary to-secondary flex items-center justify-center p-5">
-            <div class="w-full max-w-lg">
-                <div class="bg-white p-10 rounded-2xl shadow-2xl">
-                    <div class="text-center mb-8">
-                        <h2 class="text-3xl font-bold text-primary mb-4">
-                            <i class="fas fa-user-plus"></i> Registro de Usuario
-                        </h2>
-                        <button id="back-to-login" class="px-4 py-2 bg-gray-500 text-white text-sm rounded-lg hover:bg-gray-600 transition-colors">
-                            <i class="fas fa-arrow-left"></i> Volver al Login
-                        </button>
-                    </div>
-                    <form id="register-form" class="space-y-5">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label for="reg-name" class="block text-sm font-semibold text-gray-700 mb-2">Nombre Completo:</label>
-                                <input type="text" id="reg-name" name="name" required 
-                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors">
-                            </div>
-                            <div>
-                                <label for="reg-email" class="block text-sm font-semibold text-gray-700 mb-2">Email:</label>
-                                <input type="email" id="reg-email" name="email" required 
-                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label for="reg-password" class="block text-sm font-semibold text-gray-700 mb-2">Contraseña:</label>
-                                <input type="password" id="reg-password" name="password" required 
-                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors">
-                            </div>
-                            <div>
-                                <label for="reg-role" class="block text-sm font-semibold text-gray-700 mb-2">Rol:</label>
-                                <select id="reg-role" name="role" required 
-                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors">
-                                    <option value="">Seleccionar rol</option>
-                                    <option value="student">Estudiante</option>
-                                    <option value="teacher">Profesor</option>
-                                    <option value="admin">Administrador</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="text-center space-y-3">
-                            <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-lg font-semibold hover:shadow-lg hover:-translate-y-0.5 transition-all">
-                                <i class="fas fa-user-plus"></i> Registrarse
-                            </button>
-                            <button type="button" id="back-to-login-mobile" class="w-full px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors md:hidden">
-                                <i class="fas fa-arrow-left"></i> Volver al Login
-                            </button>
-                        </div>
-                    </form>
-                </div>
+    <!-- Main Dashboard -->
+    <div id="dashboardScreen" class="screen">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>LearnEx Beta</span>
             </div>
-        </div>
+            <div class="nav-user">
+                <span id="userRole"></span>
+                <button id="logoutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </nav>
 
-        <!-- Dashboard Screen -->
-        <div id="dashboard-screen" class="screen min-h-screen bg-gray-50 flex-col">
-            <nav class="bg-white shadow-lg px-6 py-4">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <h2 class="text-2xl font-bold text-primary">
-                            <i class="fas fa-graduation-cap"></i> LEARNEX
-                        </h2>
-                    </div>
-                    <div class="flex items-center space-x-4">
-                        <span id="user-name" class="font-semibold text-gray-700">Usuario</span>
-                        <span id="user-role" class="px-3 py-1 bg-primary text-white text-sm rounded-full">Rol</span>
-                        <button id="logout-btn" class="px-4 py-2 border-2 border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
-                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                        </button>
-                    </div>
-                </div>
-            </nav>
-            <main class="p-6">
-                <div id="content-area" class="bg-white rounded-xl shadow-lg p-8 min-h-96">
-                    <!-- Dashboard content -->
+        <div class="main-container">
+            <aside class="sidebar">
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <!-- Dynamically generated based on role -->
+                </ul>
+            </aside>
+
+            <main class="content">
+                <div id="contentArea">
+                    <!-- Dynamic content -->
                 </div>
             </main>
         </div>
     </div>
-    <script src="./backend/js/login.js"></script>
-    <script src="./backend/js/register.js"></script>
-    <script src="./backend/js/dashboard.js"></script>
+
+    <!-- Modal for functionalities -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Suppress blocked ads errors
+        window.addEventListener('error', function(e) {
+            if (e.message && e.message.includes('googlesyndication')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+    <script src="backend/js/auth.js"></script>
+    <script src="backend/js/basic-functions.js"></script>
+    <script src="backend/js/app.js"></script>
+    <script src="backend/js/tests.js"></script>
 </body>
 </html>
