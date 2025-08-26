@@ -1,7 +1,0 @@
-id_usuario;nombre;apellido;email;contraseña;id_rol;estado
-1;Juan;Pérez;juan@learnex.com;123;3;activo
-2;María;Gómez;maria@learnex.com;123;3;activo
-3;Carlos;Ramírez;carlos@learnex.com;123;2;activo
-4;Ana;Torres;ana@learnex.com;123;2;activo
-5;Luis;Fernández;luis@learnex.com;123;3;inactivo
-6;Sofía;Martínez;sofia@learnex.com;123;3;activo
