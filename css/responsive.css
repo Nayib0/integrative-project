@@ -1,0 +1,259 @@
+/* Responsive Design para LearnEx */
+
+/* Base styles - Desktop first */
+* {
+    box-sizing: border-box;
+}
+
+/* Default desktop layout */
+.main-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar {
+    width: 250px;
+    height: calc(100vh - 60px);
+    position: sticky;
+    top: 60px;
+    background: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+}
+
+.nav-menu {
+    display: block;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu li {
+    width: 100%;
+}
+
+.nav-menu a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #495057;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.nav-menu a:hover {
+    background: #e9ecef;
+}
+
+.nav-menu a.active {
+    background: #007bff;
+    color: white;
+}
+
+.nav-menu i {
+    margin-right: 10px;
+    width: 20px;
+}
+
+.content {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.mobile-menu-toggle {
+    display: none;
+}
+
+/* Tables responsive */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    min-width: 600px;
+}
+
+/* Stats grid responsive */
+.stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.stat-card {
+    padding: 15px;
+}
+
+/* Action grid responsive */
+.action-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+/* Modal responsive */
+.modal-content {
+    width: 95%;
+    max-width: 500px;
+    margin: 10px;
+    padding: 20px;
+}
+
+/* Tablet styles */
+@media (min-width: 768px) {
+    .demo-buttons {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .nav-brand span {
+        display: inline;
+    }
+    
+    .nav-menu {
+        flex-direction: column;
+        overflow-x: visible;
+    }
+    
+    .nav-menu span {
+        display: inline;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .action-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+    .main-container {
+        flex-direction: row;
+    }
+    
+    .sidebar {
+        width: 250px;
+        height: calc(100vh - 60px);
+        position: sticky;
+        top: 60px;
+        order: 1;
+    }
+    
+    .nav-menu {
+        flex-direction: column;
+        display: block !important;
+    }
+    
+    .nav-menu.mobile-hidden {
+        display: block !important;
+    }
+    
+    .content {
+        flex: 1;
+        padding: 30px;
+        order: 2;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .action-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Large desktop */
+@media (min-width: 1440px) {
+    .content {
+        padding: 40px;
+    }
+    
+    .login-card {
+        max-width: 450px;
+    }
+}
+
+/* Touch devices */
+@media (hover: none) {
+    .demo-btn:hover,
+    .btn-primary:hover,
+    .btn-secondary:hover {
+        transform: none;
+    }
+    
+    .nav-menu a {
+        padding: 12px;
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+    .main-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        order: 2;
+    }
+    
+    .mobile-menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        color: #666;
+        font-size: 18px;
+        padding: 10px;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+    
+    .nav-menu {
+        display: flex;
+        overflow-x: auto;
+        padding: 10px 0;
+        gap: 5px;
+    }
+    
+    .nav-menu.mobile-hidden {
+        display: none;
+    }
+    
+    .nav-menu li {
+        flex-shrink: 0;
+    }
+    
+    .nav-menu a {
+        padding: 8px 12px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+    
+    .nav-menu span {
+        display: none;
+    }
+    
+    .content {
+        width: 100%;
+        padding: 15px;
+        order: 1;
+    }
+}
+
+/* Print styles */
+@media print {
+    .sidebar,
+    .navbar,
+    .modal,
+    .demo-users {
+        display: none !important;
+    }
+    
+    .content {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+}

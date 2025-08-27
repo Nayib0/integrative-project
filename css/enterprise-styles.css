@@ -1,0 +1,428 @@
+/* Estilos para funcionalidades empresariales */
+
+/* Video Calls */
+.video-call-widget {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.video-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.live-indicator {
+    background: #dc3545;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    animation: pulse 2s infinite;
+}
+
+.video-preview {
+    text-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.video-placeholder i {
+    font-size: 3rem;
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.video-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* Evaluaciones */
+.evaluations-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.eval-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.eval-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.eval-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border-left: 5px solid #667eea;
+}
+
+.eval-card.completed {
+    border-left-color: #28a745;
+}
+
+.eval-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.eval-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.eval-status.active {
+    background: #667eea;
+    color: white;
+}
+
+.eval-status.completed {
+    background: #28a745;
+    color: white;
+}
+
+.eval-info {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.eval-info span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.eval-actions-card {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.eval-actions-card button {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.eval-actions-card button:hover {
+    background: #f8f9fa;
+    border-color: #667eea;
+}
+
+/* IA Dashboard */
+.ai-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.ai-status-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.ai-brain-icon {
+    font-size: 3rem;
+    opacity: 0.9;
+}
+
+.ai-metrics {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.insight-card {
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 5px solid;
+}
+
+.insight-card.trend-up {
+    background: #e8f5e8;
+    border-left-color: #28a745;
+}
+
+.insight-card.alert {
+    background: #fff3cd;
+    border-left-color: #ffc107;
+}
+
+.insight-card.opportunity {
+    background: #e7f3ff;
+    border-left-color: #007bff;
+}
+
+.insight-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+/* Learning Paths */
+.learning-paths-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.path-card {
+    border: 2px solid #e1e5e9;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.student-avatar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.path-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.path-step {
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+.path-step.completed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.path-step.current {
+    background: #fff3cd;
+    color: #856404;
+    border-left: 4px solid #ffc107;
+}
+
+.path-step.pending {
+    background: #f8f9fa;
+    color: #6c757d;
+}
+
+/* Video Calls Dashboard */
+.video-calls-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.live-class-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 5px solid #dc3545;
+}
+
+.pulse {
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    margin-right: 5px;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.class-info {
+    flex: 1;
+}
+
+.class-duration {
+    color: #dc3545;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Timeline */
+.classes-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.timeline-item {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+.timeline-item.upcoming {
+    border-left: 5px solid #ffc107;
+}
+
+.timeline-time {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #667eea;
+    min-width: 60px;
+}
+
+.timeline-content {
+    flex: 1;
+}
+
+.timeline-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.timeline-actions button {
+    padding: 6px 12px;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+/* Tools Grid */
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.tool-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.tool-card:hover {
+    transform: translateY(-3px);
+}
+
+.tool-card i {
+    font-size: 2rem;
+    color: #667eea;
+    margin-bottom: 15px;
+}
+
+.tool-card button {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Recordings */
+.recordings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.recording-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+.recording-thumbnail {
+    width: 80px;
+    height: 60px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #667eea;
+    font-size: 1.5rem;
+}
+
+.recording-info {
+    flex: 1;
+}
+
+.recording-stats {
+    display: flex;
+    gap: 15px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.recording-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.recording-actions button {
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
