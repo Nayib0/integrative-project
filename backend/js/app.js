@@ -1,4 +1,3 @@
-// GLOBAL APPLICATION STATE
 // Manages current user, view state, and demo data for the application
 const AppState = {
     // Currently authenticated user
@@ -114,7 +113,6 @@ const MenuConfig = {
     ]
 };
 
-// APPLICATION INITIALIZATION
 // Initialize the application when DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
