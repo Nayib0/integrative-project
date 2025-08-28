@@ -33,16 +33,60 @@ The platform allows for assignments, video calls, and also integrates **AI** tha
 
 ## Project Structure
 
-- **/.vscode/** → Environment settings (e.g., `settings.json`).
-- **/backend/** → Server logic and APIs.
-- **/css/** → Application styles.
-- **/docs/** → Technical documentation (navigation, E-R model, SQL scripts).
-- **/node_modules/** → Project dependencies.
-- **/server/** → Server code and main configuration.
-- **index.html** → Main application interface.
-- **package.json** → Project information and dependencies.
-- **.env** → Environment variables. (AI APIKEY)
-
+INTEGRATIVE-PROJECT/
+│
+├── .vscode/
+│ └── settings.json
+│
+├── backend/
+│ ├── js/
+│ │ ├── app.js
+│ │ ├── auth.js
+│ │ ├── basic-functions.js
+│ │ ├── chatbot.js
+│ │ ├── server.js
+│ │ ├── tests.js
+│ │ └── index.js
+│ │
+│ └── css/
+│ ├── chatbot.css
+│ ├── enterprise-styles.css
+│ ├── loading.css
+│ ├── modern-interface.css
+│ ├── responsive.css
+│ └── styles.css
+│
+├── docs/
+│ ├── estructura-navegacion.txt
+│ ├── modelo-entidad-relacion.png
+│ └── script.sql
+│
+├── node_modules/
+│
+├── server/
+│ ├── data/
+│ │ ├── 01_users.csv
+│ │ ├── 02_curses.csv
+│ │ ├── 03_subjects.csv
+│ │ ├── 04_curse_subject_teacher.csv
+│ │ ├── 05_notes.csv
+│ │ └── 06_students_curses.csv
+│ │
+│ └── seeders/
+│ ├── load_curse_subject_teacher.js
+│ ├── load_curses.js
+│ ├── load_notes.js
+│ ├── load_students_curses.js
+│ ├── load_subjects.js
+│ ├── load_users.js
+│ ├── run_seeders.js
+│ └── conexion_db.js
+│
+├── .env
+├── index.html
+├── package-lock.json
+├── package.json
+└── README.md
 ---
 
 ## Technologies Used
