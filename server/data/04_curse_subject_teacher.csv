@@ -1,1 +1,16 @@
-id_cst;id_curse;id_subject;id_teacher1;1;1 (Matemáticas);32;1;2 (Lengua y Literatura);73;1;3 (Ciencias Naturales);114;1;4 (Historia);155;2;5 (Geografía);76;2;6 (Inglés);117;2;7 (Educación Física);38;2;8 (Informática);159;3;9 (Biología);1110;3;10 (Física);311;3;11 (Química);712;3;12 (Filosofía);1513;4;13 (Arte);314;4;14 (Música);715;4;15 (Ética y Valores);11
+id_cst;id_curse;id_subject;id_teacher;
+1;1;1 (Matematicas);3;
+2;1;2 (Lengua y Literatura);7;
+3;1;3 (Ciencias Naturales);11;
+4;1;4 (Historia);15;
+5;2;5 (Geografia);7;
+6;2;6 (Ingles);11;
+7;2;7 (Educacion Fisica);3;
+8;2;8 (Informatica);15;
+9;3;9 (Biologia);11;
+10;3;10 (Fisica);3;
+11;3;11 (Quimica);7;
+12;3;12 (Filosofia);15;
+13;4;13 (Arte);3;
+14;4;14 (Musica);7;
+15;4;15 (Etica y Valores);11;
