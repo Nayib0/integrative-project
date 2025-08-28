@@ -1,117 +1,53 @@
--- Crear la base de datos
+-- ==========================
+-- CREATE TABLES FOR PROJECT
+-- ==========================
+
 CREATE DATABASE learnex;
+CREATE SCHEMA learnex
 
--- Conectarse a la base
-\c learnex;
-
--- Crear esquema learnex
-CREATE SCHEMA learnex;
-
---------------------------------------------------
--- 1. Roles
---------------------------------------------------
-CREATE TABLE learnex.roles (
-    id_rol SERIAL PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL UNIQUE,
-    descripcion VARCHAR(150)
+-- USERS
+CREATE TABLE users (
+    id_user INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    mail VARCHAR(150) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    rol VARCHAR(50) NOT NULL,
+    state VARCHAR(20) NOT NULL
 );
 
---------------------------------------------------
--- 2. Usuarios
---------------------------------------------------
-CREATE TABLE learnex.usuarios (
-    id_usuario SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    contraseña VARCHAR(255) NOT NULL,
-    id_rol INT REFERENCES learnex.roles(id_rol),
-    estado VARCHAR(20) DEFAULT 'activo' CHECK (estado IN ('activo','inactivo'))
+-- CURSES
+CREATE TABLE curses (
+    id_curse INT PRIMARY KEY,
+    grade VARCHAR(20) NOT NULL,
+    school_year INT NOT NULL
 );
 
---------------------------------------------------
--- 3. Cursos
---------------------------------------------------
-CREATE TABLE learnex.cursos (
-    id_curso SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    grado VARCHAR(10) NOT NULL,
-    año_escolar INT NOT NULL
+-- SUBJECTS
+CREATE TABLE subjects (
+    id_subjects INT PRIMARY KEY,
+    name_subject VARCHAR(100) NOT NULL
 );
 
---------------------------------------------------
--- 4. Asignaturas
---------------------------------------------------
-CREATE TABLE learnex.asignaturas (
-    id_asignatura SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    descripcion TEXT
+-- CURSE - SUBJECT - TEACHER (RELATION)
+CREATE TABLE curse_subject_teacher (
+    id_cst INT PRIMARY KEY,
+    id_curse INT NOT NULL REFERENCES curses(id_curse) ON DELETE CASCADE,
+    id_subject INT NOT NULL REFERENCES subjects(id_subjects) ON DELETE CASCADE,
+    id_teacher INT NOT NULL REFERENCES users(id_user) ON DELETE CASCADE
 );
 
---------------------------------------------------
--- 5. Curso_asignatura (relación cursos ↔ asignaturas)
---------------------------------------------------
-CREATE TABLE learnex.curso_asignatura (
-    id_curso_asignatura SERIAL PRIMARY KEY,
-    id_curso INT NOT NULL REFERENCES learnex.cursos(id_curso),
-    id_asignatura INT NOT NULL REFERENCES learnex.asignaturas(id_asignatura),
-    id_profesor INT NOT NULL REFERENCES learnex.usuarios(id_usuario)
+-- NOTES
+CREATE TABLE notes (
+    id_note INT PRIMARY KEY,
+    id_student INT NOT NULL REFERENCES users(id_user) ON DELETE CASCADE,
+    id_cst INT NOT NULL REFERENCES curse_subject_teacher(id_cst) ON DELETE CASCADE,
+    calification NUMERIC(3,1) NOT NULL
 );
 
---------------------------------------------------
--- 6. Estudiante_curso (relación estudiantes ↔ cursos)
---------------------------------------------------
-CREATE TABLE learnex.estudiante_curso (
-    id_estudiante_curso SERIAL PRIMARY KEY,
-    id_usuario INT NOT NULL REFERENCES learnex.usuarios(id_usuario),
-    id_curso INT NOT NULL REFERENCES learnex.cursos(id_curso)
-);
-
---------------------------------------------------
--- 7. Evaluaciones
---------------------------------------------------
-CREATE TABLE learnex.evaluaciones (
-    id_evaluacion SERIAL PRIMARY KEY,
-    titulo VARCHAR(100) NOT NULL,
-    descripcion TEXT,
-    fecha DATE NOT NULL,
-    id_curso_asignatura INT NOT NULL REFERENCES learnex.curso_asignatura(id_curso_asignatura),
-    porcentaje NUMERIC(5,2) NOT NULL
-);
-
---------------------------------------------------
--- 8. Notas
---------------------------------------------------
-CREATE TABLE learnex.notas (
-    id_nota SERIAL PRIMARY KEY,
-    id_evaluacion INT NOT NULL REFERENCES learnex.evaluaciones(id_evaluacion),
-    id_estudiante INT NOT NULL REFERENCES learnex.usuarios(id_usuario),
-    calificacion NUMERIC(5,2) NOT NULL,
-    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    metodo_ingreso VARCHAR(20) DEFAULT 'manual' CHECK (metodo_ingreso IN ('manual','ocr','excel'))
-);
-
---------------------------------------------------
--- 9. Reportes
---------------------------------------------------
-CREATE TABLE learnex.reportes (
-    id_reporte SERIAL PRIMARY KEY,
-    id_estudiante INT NOT NULL REFERENCES learnex.usuarios(id_usuario),
-    id_curso INT NOT NULL REFERENCES learnex.cursos(id_curso),
-    promedio_general NUMERIC(5,2),
-    estado VARCHAR(20) CHECK (estado IN ('aprobado','reprobado')),
-    fecha_generacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    exportado VARCHAR(10) CHECK (exportado IN ('pdf','excel'))
-);
-
---------------------------------------------------
--- 10. Notificaciones
---------------------------------------------------
-CREATE TABLE learnex.notificaciones (
-    id_notificacion SERIAL PRIMARY KEY,
-    id_usuario INT NOT NULL REFERENCES learnex.usuarios(id_usuario),
-    mensaje TEXT NOT NULL,
-    tipo VARCHAR(20) CHECK (tipo IN ('recordatorio','alerta','aviso')),
-    fecha_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    leida BOOLEAN DEFAULT FALSE
+-- STUDENTS - CURSES (RELATION)
+CREATE TABLE students_curses (
+    id_student_curse INT PRIMARY KEY,
+    id_user INT NOT NULL REFERENCES users(id_user) ON DELETE CASCADE,
+    id_curse INT NOT NULL REFERENCES curses(id_curse) ON DELETE CASCADE
 );

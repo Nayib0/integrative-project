@@ -3,7 +3,7 @@ const { Pool } = pkg;
 
 export const pool = new Pool({
     host:       "localhost",
-    database:   "Learnex",         // Database name in PostgreSQL
+    database:   "learnex",         // Database name in PostgreSQL
     port:       5432,              // PostgreSQL default port
     user:       "postgres",        // PostgreSQL user
     password:   "djbarrios26",     // Password
