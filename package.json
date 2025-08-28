@@ -5,7 +5,8 @@
   "main": "backend/js/server.js",
   "scripts": {
     "start": "node backend/js/server.js",
-    "dev": "node backend/js/server.js"
+    "dev": "node backend/js/server.js",
+    "seed": "node seeders/run_seeders.js"
   },
   "dependencies": {
     "csv-parser": "^3.2.0",

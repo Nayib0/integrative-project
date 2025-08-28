@@ -20,26 +20,39 @@ const AuthSystem = {
         return btoa(Date.now() + Math.random()).replace(/[^a-zA-Z0-9]/g, '');
     },
     
-    // Authenticate user with username and password
+    // Authenticate user with username and password using database
     // Returns success/failure result with user data or error message
-    authenticate(username, password) {
-        const user = this.users[username.toLowerCase()];
-        if (user && user.password === password) {
-            const token = this.generateToken();
-            // Create session object with user data and timestamps
-            this.currentSession = {
-                token,
-                user: { username, role: user.role, name: user.name },
-                loginTime: Date.now(),
-                lastActivity: Date.now()
-            };
+    async authenticate(username, password) {
+        try {
+            const response = await fetch('/api/auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
             
-            // Save encrypted session to localStorage
-            localStorage.setItem('learnex_session', btoa(JSON.stringify(this.currentSession)));
-            this.startSessionTimer();
-            return { success: true, user: this.currentSession.user, token };
+            const result = await response.json();
+            
+            if (result.success) {
+                const token = this.generateToken();
+                // Create session object with user data and timestamps
+                this.currentSession = {
+                    token,
+                    user: result.user,
+                    loginTime: Date.now(),
+                    lastActivity: Date.now()
+                };
+                
+                // Save encrypted session to localStorage
+                localStorage.setItem('learnex_session', btoa(JSON.stringify(this.currentSession)));
+                this.startSessionTimer();
+                return { success: true, user: this.currentSession.user, token };
+            }
+            
+            return { success: false, error: result.error };
+        } catch (error) {
+            console.error('Auth error:', error);
+            return { success: false, error: 'Error de conexión' };
         }
-        return { success: false, error: 'Credenciales inválidas' };
     },
     
     // Validate current session - checks for expiration and activity

@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const axios = require('axios');
+const { setupRoutes } = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,10 +15,15 @@ const DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions';
 app.use(express.static(path.join(__dirname, '../../')));
 app.use(express.json());
 
-// Ruta principal
+// Setup API routes
+setupRoutes(app);
+
+// Main route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../../index.html'));
 });
+
+
 
 // API del chatbot
 app.post('/api/chatbot', async (req, res) => {
@@ -32,6 +38,8 @@ app.post('/api/chatbot', async (req, res) => {
         res.json({ response: fallbackResponse });
     }
 });
+
+
 
 // Función con IA DeepSeek
 async function generateAIResponse(message, userRole) {

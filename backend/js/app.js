@@ -157,7 +157,7 @@ function setupEventListeners() {
 
 // Handle login form submission
 // Validates credentials and initializes user session
-function handleLogin(e) {
+async function handleLogin(e) {
     e.preventDefault();
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
@@ -168,25 +168,35 @@ function handleLogin(e) {
         return;
     }
     
-    // Attempt authentication
-    const result = AuthSystem.authenticate(username, password);
-    
-    if (result.success) {
-        // Set current user and update UI
-        AppState.currentUser = result.user;
-        document.getElementById('userRole').textContent = `${result.user.name} (${result.user.role})`;
+    try {
+        // Attempt authentication
+        const result = await AuthSystem.authenticate(username, password);
         
-        // Show dashboard only after successful authentication
-        document.getElementById('dashboardScreen').style.display = 'block';
-        setupNavigation(result.user.role);
-        showScreen('dashboardScreen');
-        showView('dashboard');
-        document.getElementById('loginForm').reset();
-        
-        console.log('✅ Login successful:', result.user.name);
-    } else {
-        showLoginError(result.error);
-        console.log('❌ Login failed:', result.error);
+        if (result.success) {
+            // Set current user and update UI
+            AppState.currentUser = result.user;
+            document.getElementById('userRole').textContent = `${result.user.name} (${result.user.role})`;
+            
+            // Show dashboard only after successful authentication
+            document.getElementById('dashboardScreen').style.display = 'block';
+            setupNavigation(result.user.role);
+            showScreen('dashboardScreen');
+            showView('dashboard');
+            document.getElementById('loginForm').reset();
+            
+            // Initialize chatbot for teachers and students
+            if (result.user.role === 'teacher' || result.user.role === 'student') {
+                setTimeout(initializeChatbot, 500);
+            }
+            
+            console.log('✅ Login successful:', result.user.name);
+        } else {
+            showLoginError(result.error);
+            console.log('❌ Login failed:', result.error);
+        }
+    } catch (error) {
+        showLoginError('Error de conexión');
+        console.error('Login error:', error);
     }
 }
 

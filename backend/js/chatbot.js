@@ -3,10 +3,20 @@
 
 let chatbotOpen = false;
 
-// Initialize chatbot
+// Initialize chatbot only for teachers and students
 function initializeChatbot() {
-    createChatbotHTML();
-    setupChatbotEvents();
+    const user = AuthSystem.getCurrentUser();
+    if (user && (user.role === 'teacher' || user.role === 'student')) {
+        // Remove existing chatbot if any
+        const existing = document.getElementById('chatbot-container');
+        if (existing) existing.remove();
+        const existingToggle = document.getElementById('chatbot-toggle');
+        if (existingToggle) existingToggle.remove();
+        
+        createChatbotHTML();
+        setupChatbotEvents();
+        console.log('Chatbot initialized for:', user.role);
+    }
 }
 
 // Create chatbot HTML structure
@@ -51,22 +61,53 @@ function setupChatbotEvents() {
     const send = document.getElementById('chatbot-send');
     const input = document.getElementById('chatbot-input');
     
-    toggle.addEventListener('click', toggleChatbot);
-    close.addEventListener('click', closeChatbot);
-    send.addEventListener('click', sendMessage);
-    input.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendMessage();
-    });
+    if (toggle) {
+        toggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleChatbot();
+        });
+    }
+    
+    if (close) {
+        close.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeChatbot();
+        });
+    }
+    
+    if (send) {
+        send.addEventListener('click', (e) => {
+            e.preventDefault();
+            sendMessage();
+        });
+    }
+    
+    if (input) {
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    }
 }
 
 // Toggle chatbot visibility
 function toggleChatbot() {
     const container = document.getElementById('chatbot-container');
+    if (!container) {
+        console.error('Chatbot container not found');
+        return;
+    }
+    
     chatbotOpen = !chatbotOpen;
     
     if (chatbotOpen) {
         container.style.display = 'flex';
-        document.getElementById('chatbot-input').focus();
+        setTimeout(() => {
+            const input = document.getElementById('chatbot-input');
+            if (input) input.focus();
+        }, 100);
     } else {
         container.style.display = 'none';
     }
@@ -152,7 +193,20 @@ function removeTyping() {
     if (typing) typing.remove();
 }
 
-// Initialize when DOM is loaded
+// Make functions globally accessible
+window.initializeChatbot = initializeChatbot;
+window.toggleChatbot = toggleChatbot;
+window.closeChatbot = closeChatbot;
+window.sendMessage = sendMessage;
+
+// Initialize when DOM is loaded and user logs in
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(initializeChatbot, 1000);
+    // Check periodically if user has logged in
+    const checkUserInterval = setInterval(() => {
+        const user = AuthSystem.getCurrentUser();
+        if (user && (user.role === 'teacher' || user.role === 'student')) {
+            initializeChatbot();
+            clearInterval(checkUserInterval);
+        }
+    }, 1000);
 });
