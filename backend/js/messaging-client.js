@@ -215,7 +215,7 @@ class MessagingClient {
         }
         
         container.innerHTML = html;
-    },
+    }
     
     renderConversationItem(conv) {
         const isTeacherParent = conv.title.includes('Prof.') || conv.title.includes('Comunicación:');

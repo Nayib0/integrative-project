@@ -9,7 +9,9 @@
     "original": "node backend/js/server.js",
     "seed": "node server/seeders/run_seeders.js",
     "database": "node server/conexion_db.js",
-    "init-db": "psql -d learnex -f docs/extended-schema.sql"
+    "init-db": "psql -d learnex -f docs/extended-schema.sql",
+    "fix-windows": "node windows-fix.js",
+    "test-db": "node windows-fix.js"
   },
   "dependencies": {
     "csv-parser": "^3.2.0",
