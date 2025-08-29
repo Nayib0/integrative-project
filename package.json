@@ -1,18 +1,43 @@
 {
   "name": "integrative-project",
-  "version": "1.0.0",
-  "description": "Integrative project",
-  "main": "backend/js/server.js",
+  "version": "2.0.0",
+  "description": "Learnex - Advanced Educational Management Platform",
+  "main": "backend/js/enhanced-server.js",
   "scripts": {
-    "start": "node backend/js/server.js",
-    "dev": "node backend/js/server.js",
-    "seed": "node seeders/run_seeders.js"
+    "start": "node backend/js/enhanced-server.js",
+    "dev": "node backend/js/enhanced-server.js",
+    "original": "node backend/js/server.js",
+    "seed": "node server/seeders/run_seeders.js",
+    "database": "node server/conexion_db.js",
+    "init-db": "psql -d learnex -f docs/extended-schema.sql"
   },
   "dependencies": {
     "csv-parser": "^3.2.0",
     "axios": "^1.6.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "pg": "^8.16.3"
-  }
+    "pg": "^8.16.3",
+    "socket.io": "^4.7.2",
+    "multer": "^1.4.5-lts.1",
+    "pdfkit": "^0.13.0",
+    "chart.js": "^4.4.0",
+    "moment": "^2.29.4",
+    "nodemailer": "^6.9.7",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "education",
+    "learning",
+    "management",
+    "ai",
+    "gamification",
+    "analytics"
+  ],
+  "author": "Learnex Team",
+  "license": "MIT"
 }

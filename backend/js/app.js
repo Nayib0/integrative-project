@@ -61,54 +61,57 @@ const MenuConfig = {
     // Administrator menu - full system access
     admin: [
         { id: 'dashboard', icon: 'fas fa-tachometer-alt', text: 'Dashboard', view: 'dashboard' },
+        { id: 'analytics', icon: 'fas fa-chart-line', text: 'Analytics v2.0', view: 'analytics' },
+        { id: 'messaging', icon: 'fas fa-comments', text: 'Mensajería v2.0', view: 'messaging' },
         { id: 'users', icon: 'fas fa-users', text: 'Usuarios', view: 'users' },
         { id: 'students', icon: 'fas fa-user-graduate', text: 'Estudiantes', view: 'students' },
         { id: 'teachers', icon: 'fas fa-chalkboard-teacher', text: 'Profesores', view: 'teachers' },
+        { id: 'tasks', icon: 'fas fa-clipboard-list', text: 'Sistema Tareas v2.0', view: 'tasks' },
+        { id: 'gamification', icon: 'fas fa-gamepad', text: 'Gamificación v2.0', view: 'gamification' },
         { id: 'academic-periods', icon: 'fas fa-calendar-alt', text: 'Períodos Académicos', view: 'academic-periods' },
         { id: 'subject-assignment', icon: 'fas fa-clipboard-list', text: 'Asignación Materias', view: 'subject-assignment' },
-        { id: 'advanced-analytics', icon: 'fas fa-chart-line', text: 'Analíticas IA', view: 'advanced-analytics' },
         { id: 'ai-recommendations', icon: 'fas fa-brain', text: 'IA Educativa', view: 'ai-recommendations' },
         { id: 'video-calls', icon: 'fas fa-video', text: 'Videollamadas', view: 'video-calls' },
         { id: 'digital-library', icon: 'fas fa-book-open', text: 'Biblioteca Digital', view: 'digital-library' },
         { id: 'data-import', icon: 'fas fa-upload', text: 'Importar Datos', view: 'data-import' },
         { id: 'backup-system', icon: 'fas fa-database', text: 'Backup Sistema', view: 'backup-system' },
-        { id: 'smtp-config', icon: 'fas fa-envelope-open-text', text: 'Config. Email', view: 'smtp-config' },
-        { id: 'email-templates', icon: 'fas fa-file-alt', text: 'Plantillas Email', view: 'email-templates' },
-        { id: 'messaging', icon: 'fas fa-comments', text: 'Mensajería', view: 'messaging' },
         { id: 'settings', icon: 'fas fa-cog', text: 'Configuración', view: 'settings' }
     ],
     // Teacher menu - classroom management focused
     teacher: [
         { id: 'dashboard', icon: 'fas fa-tachometer-alt', text: 'Dashboard', view: 'dashboard' },
         { id: 'students', icon: 'fas fa-user-graduate', text: 'Mis Estudiantes', view: 'students' },
-        { id: 'grades', icon: 'fas fa-clipboard-list', text: 'Calificaciones', view: 'grades' },
+        { id: 'tasks', icon: 'fas fa-clipboard-list', text: 'Gestión Tareas v2.0', view: 'tasks' },
+        { id: 'messaging', icon: 'fas fa-comments', text: 'Mensajería v2.0', view: 'messaging' },
+        { id: 'analytics', icon: 'fas fa-chart-line', text: 'Analytics v2.0', view: 'analytics' },
+        { id: 'grades', icon: 'fas fa-star', text: 'Calificaciones', view: 'grades' },
         { id: 'evaluations', icon: 'fas fa-clipboard-check', text: 'Evaluaciones', view: 'evaluations' },
         { id: 'ai-recommendations', icon: 'fas fa-brain', text: 'IA Educativa', view: 'ai-recommendations' },
         { id: 'video-calls', icon: 'fas fa-video', text: 'Clases Virtuales', view: 'video-calls' },
         { id: 'digital-library', icon: 'fas fa-book-open', text: 'Biblioteca', view: 'digital-library' },
-        { id: 'advanced-analytics', icon: 'fas fa-chart-line', text: 'Analíticas', view: 'advanced-analytics' },
-        { id: 'observations', icon: 'fas fa-eye', text: 'Observaciones', view: 'observations' },
-        { id: 'messaging', icon: 'fas fa-comments', text: 'Mensajería', view: 'messaging' }
+        { id: 'observations', icon: 'fas fa-eye', text: 'Observaciones', view: 'observations' }
     ],
     // Student menu - learning and progress focused
     student: [
         { id: 'dashboard', icon: 'fas fa-tachometer-alt', text: 'Dashboard', view: 'dashboard' },
         { id: 'grades', icon: 'fas fa-star', text: 'Mis Calificaciones', view: 'grades' },
-        { id: 'tasks', icon: 'fas fa-book', text: 'Mis Tareas', view: 'tasks' },
-        { id: 'gamification', icon: 'fas fa-gamepad', text: 'Gamificación', view: 'gamification' },
+        { id: 'tasks', icon: 'fas fa-book', text: 'Mis Tareas v2.0', view: 'tasks' },
+        { id: 'gamification', icon: 'fas fa-gamepad', text: 'Gamificación v2.0', view: 'gamification' },
+        { id: 'messaging', icon: 'fas fa-comments', text: 'Mensajería v2.0', view: 'messaging' },
+        { id: 'analytics', icon: 'fas fa-chart-line', text: 'Analytics v2.0', view: 'analytics' },
         { id: 'digital-library', icon: 'fas fa-book-open', text: 'Biblioteca', view: 'digital-library' },
         { id: 'video-calls', icon: 'fas fa-video', text: 'Clases Virtuales', view: 'video-calls' },
         { id: 'ai-tutor', icon: 'fas fa-robot', text: 'Tutor IA', view: 'ai-tutor' },
-        { id: 'achievements', icon: 'fas fa-trophy', text: 'Logros', view: 'achievements' },
-        { id: 'messaging', icon: 'fas fa-comments', text: 'Mensajes', view: 'messaging' }
+        { id: 'achievements', icon: 'fas fa-trophy', text: 'Logros', view: 'achievements' }
     ],
     // Parent menu - child monitoring focused
     parent: [
         { id: 'dashboard', icon: 'fas fa-tachometer-alt', text: 'Dashboard', view: 'dashboard' },
         { id: 'child-progress', icon: 'fas fa-chart-line', text: 'Progreso del Hijo', view: 'child-progress' },
+        { id: 'analytics', icon: 'fas fa-chart-bar', text: 'Analytics v2.0', view: 'analytics' },
+        { id: 'messaging', icon: 'fas fa-comments', text: 'Mensajería v2.0', view: 'messaging' },
         { id: 'grades', icon: 'fas fa-star', text: 'Calificaciones', view: 'grades' },
         { id: 'attendance', icon: 'fas fa-calendar-check', text: 'Asistencia', view: 'attendance' },
-        { id: 'messaging', icon: 'fas fa-comments', text: 'Chat con Profesores', view: 'messaging' },
         { id: 'meetings', icon: 'fas fa-handshake', text: 'Reuniones', view: 'meetings' }
     ]
 };
