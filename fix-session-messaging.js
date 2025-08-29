@@ -1,18 +1,21 @@
 // Fix session persistence and real messaging
 document.addEventListener('DOMContentLoaded', function() {
-    // Fix session persistence
-    const originalLogin = window.login;
-    window.login = function(username, password) {
-        const result = originalLogin(username, password);
-        if (result && AppState.currentUser) {
-            // Save session to localStorage
-            localStorage.setItem('learnex_session', JSON.stringify({
-                user: AppState.currentUser,
-                loginTime: Date.now()
-            }));
-        }
-        return result;
-    };
+    // Fix session persistence - avoid recursion
+    if (!window.originalLogin) {
+        window.originalLogin = window.login;
+        
+        window.login = function(username, password) {
+            const result = window.originalLogin ? window.originalLogin(username, password) : false;
+            if (result && AppState.currentUser) {
+                // Save session to localStorage
+                localStorage.setItem('learnex_session', JSON.stringify({
+                    user: AppState.currentUser,
+                    loginTime: Date.now()
+                }));
+            }
+            return result;
+        };
+    }
     
     // Restore session on page load
     const savedSession = localStorage.getItem('learnex_session');

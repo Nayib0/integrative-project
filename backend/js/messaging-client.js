@@ -516,7 +516,12 @@ let messagingClient;
 document.addEventListener('DOMContentLoaded', function() {
     messagingClient = new MessagingClient();
     
-    // Force override messaging view
+    // Store original showView function once
+    if (!window.originalShowView) {
+        window.originalShowView = window.showView;
+    }
+    
+    // Override showView without recursion
     window.showView = function(viewName) {
         if (viewName === 'messaging') {
             const contentArea = document.getElementById('contentArea');
@@ -527,13 +532,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Call original function for other views
         if (window.originalShowView) {
-            window.originalShowView(viewName);
+            return window.originalShowView.call(this, viewName);
         }
-    };
-    
-    // Store original function
-    if (!window.originalShowView && window.showView) {
-        window.originalShowView = window.showView;
     }
 });
 
