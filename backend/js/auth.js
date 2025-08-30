@@ -27,7 +27,7 @@ const AuthSystem = {
             const response = await fetch('/api/auth', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ email: username, password })
             });
             
             const result = await response.json();
