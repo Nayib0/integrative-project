@@ -1,25 +1,27 @@
-require('dotenv').config();
-const express = require('express');
-const http = require('http');
-const socketIo = require('socket.io');
-const path = require('path');
-const axios = require('axios');
-const { Pool } = require('pg');
-const multer = require('multer');
+import dotenv from 'dotenv';
+dotenv.config();
+import express from 'express';
+import http from 'http';
+import { Server as SocketIOServer } from 'socket.io';
+import path from 'path';
+import axios from 'axios';
+import pkg from 'pg';
+const { Pool } = pkg;
+import multer from 'multer';
 
-// Import all systems
-const { setupRoutes } = require('./routes');
-const { TasksSystem, upload } = require('./tasks-system');
-const { MessagingSystem } = require('./messaging-system');
-const { AnalyticsSystem } = require('./analytics-system');
-const { EvaluationSystem } = require('./evaluation-system');
-const { ScheduleSystem } = require('./schedule-system');
-const { PDFSystem } = require('./pdf-system');
-const { GamificationSystem } = require('./gamification-system');
+// Import all systems (commented out - need to be converted to ES modules)
+// const { setupRoutes } = require('./routes');
+// const { TasksSystem, upload } = require('./tasks-system');
+// const { MessagingSystem } = require('./messaging-system');
+// const { AnalyticsSystem } = require('./analytics-system');
+// const { EvaluationSystem } = require('./evaluation-system');
+// const { ScheduleSystem } = require('./schedule-system');
+// const { PDFSystem } = require('./pdf-system');
+// const { GamificationSystem } = require('./gamification-system');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = new SocketIOServer(server);
 const PORT = process.env.PORT || 3000;
 
 // Database configuration

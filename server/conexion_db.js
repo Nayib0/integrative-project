@@ -6,7 +6,7 @@ export const pool = new Pool({
     database:   "learnex",         // Database name in PostgreSQL
     port:       5432,              // PostgreSQL default port
     user:       "postgres",        // PostgreSQL user
-    password:   "123456",     // Password
+    password:   "postgres",     // Password
     max:        10,                // maximum active connections
     idleTimeoutMillis: 30000,      // maximum downtime before closing
     connectionTimeoutMillis: 2000  // connection wait time

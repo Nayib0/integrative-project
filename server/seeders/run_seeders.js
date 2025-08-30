@@ -6,7 +6,7 @@ import { loadsubjects } from "./load_subjects.js"; //import route
 import { loadcst } from "./load_curse_subject_teacher.js"; //import route
 import { loadnotes } from "./load_notes.js"; //import route
 import { loadstudentscurses } from "./load_students_curses.js"; //import route
-import { loadExtendedData } from "./load_extended_data.js"; //import route
+// import { loadExtendedData } from "./load_extended_data.js"; // Comentado - no compatible con ES modules
 
 (async () => {
   try {
@@ -18,7 +18,7 @@ import { loadExtendedData } from "./load_extended_data.js"; //import route
     await loadcst();
     await loadnotes();
     await loadstudentscurses();
-    await loadExtendedData();
+    // await loadExtendedData(); // Comentado temporalmente - requiere archivos CSV extendidos
 
     console.log("✅ All seeders executed correctly.");
   } catch (error) {

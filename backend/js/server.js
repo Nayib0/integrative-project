@@ -1,8 +1,14 @@
-require('dotenv').config();
-const express = require('express');
-const path = require('path');
-const axios = require('axios');
-const { setupRoutes } = require('./routes');
+import dotenv from 'dotenv';
+dotenv.config();
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import axios from 'axios';
+// import { setupRoutes } from './routes.js'; // Comentado temporalmente
+
+// ES module equivalent of __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,8 +21,8 @@ const DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions';
 app.use(express.static(path.join(__dirname, '../../')));
 app.use(express.json());
 
-// Setup API routes
-setupRoutes(app);
+// Setup API routes - comentado temporalmente
+// setupRoutes(app);
 
 // Main route
 app.get('/', (req, res) => {

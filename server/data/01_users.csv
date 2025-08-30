@@ -89,10 +89,10 @@ id_user;name;last_name;mail;password;rol;state
 88;Evaristo;Castano;evaristo.castano@mail.com;eva933;student;active
 89;Soledad;Henao;soledad.henao@mail.com;sol144;student;active
 90;Bartolome;Giraldo;bartolome.giraldo@mail.com;bar255;student;active
-91;Esperanza;Marin;esperanza.marin@mail.com;esp366;student;active
-92;Clemente;Jaramillo;clemente.jaramillo@mail.com;cle477;student;active
-93;Remedios;Posada;remedios.posada@mail.com;rem588;student;active
-94;Evaristo;Tamayo;evaristo.tamayo@mail.com;eva699;student;active
+91;Esperanza;Marin;esperanza.marin2@mail.com;esp366;student;active
+92;Clemente;Jaramillo;clemente.jaramillo2@mail.com;cle477;student;active
+93;Remedios;Posada;remedios.posada2@mail.com;rem588;student;active
+94;Evaristo;Tamayo;evaristo.tamayo2@mail.com;eva699;student;active
 95;Maria;Gonzalez;maria.gonzalez@mail.com;mar111;teacher;active
 96;Jose;Rodriguez;jose.rodriguez@mail.com;jos222;teacher;active
 97;Carmen;Martinez;carmen.martinez@mail.com;car333;teacher;active
@@ -107,5 +107,5 @@ id_user;name;last_name;mail;password;rol;state
 106;Fernando;Herrera;fernando.herrera@mail.com;fer333;parent;active
 107;Gloria;Castro;gloria.castro@mail.com;glo444;parent;active
 108;Raul;Diaz;raul.diaz@mail.com;rau555;parent;active
-109;Sandra;Ruiz;sandra.ruiz@mail.com;   ;parent;active
+109;Sandra;Ruiz;sandra.ruiz@mail.com;san666;parent;active
 110;Marcos;Vargas;marcos.vargas@mail.com;mar777;parent;active
