@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!-- LearnEx Academic Management System - Main HTML File -->
+<html lang="es">
+<head>
+    <!-- Basic meta tags for responsive design and character encoding -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnEx - Prototipo Beta</title>
+    
+    <!-- Font preloading for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS stylesheets for different UI components -->
+    <link rel="stylesheet" href="css/modern-interface.css">     <!-- Modern UI components -->
+    <link rel="stylesheet" href="css/enterprise-styles.css">   <!-- Enterprise-grade styling -->
+    <link rel="stylesheet" href="css/responsive.css">         <!-- Mobile responsiveness -->
+    <link rel="stylesheet" href="css/loading.css">            <!-- Loading animations -->
+    <link rel="stylesheet" href="css/chatbot.css">            <!-- Chatbot interface -->
+    <link rel="stylesheet" href="css/enhanced-v2.css">        <!-- Enhanced v2.0 features -->
+    <link rel="stylesheet" href="css/messaging-v2.css">       <!-- Messaging v2.0 styles -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"> <!-- Icons -->
+</head>
+<body>
+    <!-- LOGIN SCREEN - Initial authentication interface -->
+    <div id="loginScreen" class="screen active">
+        <div class="login-container">
+            <div class="login-card">
+                <!-- Application logo and branding -->
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>LearnEx</h1>
+                    <p>Beta Prototype - Educational Platform</p>
+                </div>
+                
+                <!-- Login form with username and password fields -->
+                <form id="loginForm">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="email" id="username" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Contraseña" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+                
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN DASHBOARD - Role-based interface after authentication -->
+    <div id="dashboardScreen" class="screen">
+        <!-- Top navigation bar -->
+        <nav class="navbar">
+            <!-- Application branding -->
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>LearnEx Beta</span>
+            </div>
+            <!-- User info and logout section -->
+            <div class="nav-user">
+                <span id="userRole"></span> <!-- Displays current user role -->
+                <button id="logoutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main dashboard container -->
+        <div class="main-container">
+            <!-- Left sidebar navigation -->
+            <aside class="sidebar">
+                <!-- Mobile menu toggle button -->
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <!-- Navigation menu - dynamically generated based on user role -->
+                <ul class="nav-menu" id="navMenu">
+                    <!-- Menu items generated dynamically based on user role -->
+                </ul>
+            </aside>
+
+            <!-- Main content area -->
+            <main class="content">
+                <div id="contentArea">
+                    <!-- Dynamic content loaded here based on selected menu item -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL DIALOG - Reusable modal for various functionalities -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span> <!-- Close button -->
+            <div id="modalBody"></div> <!-- Dynamic modal content -->
+        </div>
+    </div>
+
+    <script>
+        // Error suppression for ad blockers to prevent console spam
+        window.addEventListener('error', function(e) {
+            if (e.message && e.message.includes('googlesyndication')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+    
+    <!-- Socket.IO for real-time features -->
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <!-- JavaScript modules for application functionality -->
+    <script src="backend/js/auth.js"></script>           <!-- Authentication management -->
+    <script src="backend/js/basic-functions.js"></script> <!-- Core utility functions -->
+    <script src="backend/js/app.js"></script>            <!-- Main application logic -->
+    <script src="backend/js/chatbot.js"></script>        <!-- AI Chatbot functionality -->
+    <script src="backend/js/vanilla-enhanced.js"></script> <!-- Enhanced v2.0 features -->
+    <script src="backend/js/messaging-client.js"></script> <!-- Real-time messaging -->
+    <script src="scripts/force-messaging.js"></script>          <!-- Force dynamic messaging -->
+    <script src="scripts/clean-fix.js"></script>                <!-- Clean session fix -->
+    <script src="scripts/fix-navigation.js"></script>           <!-- Navigation Fix -->
+    <script src="backend/js/tests.js"></script>         <!-- Testing utilities -->
+    <script src="backend/js/ai-frontend.js"></script>    <!-- AI Enhanced Features -->
+    <script src="backend/js/dynamic-data-loader.js"></script> <!-- Dynamic Data Loader -->
+</body>
+</html>

@@ -1,0 +1,15 @@
+/node_modules   
+/package-lock.json
+/docs/API_DOCUMENTATION.md
+/docs/USER_GUIDE.md
+/.vscode
+/docs/DOCUMENTACION.md
+/docs/GUIA_DEL_USUARIO.md
+/docs/CHANGELOG.md
+/docs/INSTALLATION.md
+/docs/INSTALLACION.md
+/docs/PROJECT_STRUCTURE.md
+/docs/ESTRUCTURA_DEL_PROYECTO.md
+.DS_Store
+/docs/ENDPOINTS.md
+/docs/DATABASE_GUIDE.md
