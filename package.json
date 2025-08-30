@@ -6,7 +6,7 @@
   "main": "backend/js/enhanced-server.js",
   "scripts": {
     "start": "node backend/js/server-sqlite.js",
-    "start-postgres": "node backend/js/server.js",
+    "start-postgres": "node backend/js/server-postgres.js",
     "dev": "node backend/js/enhanced-server.js",
     "original": "node backend/js/server.js",
     "seed": "node server/seeders/run_seeders.js",
