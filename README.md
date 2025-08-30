@@ -79,84 +79,47 @@ Learnex is a **next-generation educational platform** that revolutionizes how ed
 - **Local Knowledge Base**: Fallback educational content
 - **Role-Based AI**: Contextual responses based on user roles
 
-## 📁 Project Structure
+## 📁 Estructura del Proyecto
 
 ```
 📁 INTEGRATIVE-PROJECT/
-├── backend/
-│ ├── js/
-│ │ ├── analytics-system.js
-│ │ ├── app.js
-│ │ ├── auth.js
-│ │ ├── basic-functions.js
-│ │ ├── chatbot.js
-│ │ ├── enhanced-server.js
-│ │ ├── enhanced-ui.js
-│ │ ├── evaluation-system.js
-│ │ ├── gamification-system.js
-│ │ ├── messaging-client.js
-│ │ ├── messaging-system.js
-│ │ ├── pdf-system.js
-│ │ ├── routes.js
-│ │ ├── schedule-system.js
-│ │ ├── server.js
-│ │ ├── tasks-system.js
-│ │ ├── tests.js
-│ │ ├── vanilla-enhanced.js
-│ │ └── index.js
-│ ├── css/
-│ │ ├── chatbot.css
-│ │ ├── enhanced-v2.css
-│ │ ├── enterprise-styles.css
-│ │ └── loading.css
+├── 📄 index.html                    # Aplicación principal
+├── 📄 package.json                  # Dependencias npm
+├── 📄 README.md                     # Documentación principal
 │
-├── css/
-│ ├── messaging-v2.css
-│ ├── modern-interface.css
-│ ├── responsive.css
-│ └── styles.css
+├── 📁 backend/                      # Lógica del servidor
+│   └── 📁 js/                       # Módulos JavaScript
+│       ├── 📄 server.js             # Servidor principal
+│       ├── 📄 auth.js               # Autenticación
+│       ├── 📄 app.js                # Lógica principal
+│       ├── 📄 chatbot.js            # IA Chatbot
+│       └── 📄 dynamic-data-loader.js # Carga dinámica
 │
-├── docs/
-│ ├── API_DOCUMENTATION.md
-│ ├── ENDPOINTS.md
-│ ├── estructura-navegacion.txt
-│ ├── extended-schema.sql
-│ ├── modelo-entidad-relacion.png
-│ ├── script.sql
-│ └── TECHNICAL_DOCUMENTATION.md
+├── 📁 css/                          # Estilos y temas
+│   ├── 📄 styles.css                # Estilos principales
+│   ├── 📄 modern-interface.css      # Interfaz moderna
+│   └── 📄 responsive.css            # Diseño responsivo
 │
-├── server/
-│ ├── data/
-│ │ ├── 01_users.csv
-│ │ ├── 02_curses.csv
-│ │ ├── 03_subjects.csv
-│ │ ├── 04_curse_subject_teacher.csv
-│ │ ├── 05_notes.csv
-│ │ └── 06_students_curses.csv
-│ ├── seeders/
-│ │ ├── load_curse_subject_teacher.js
-│ │ ├── load_curses.js
-│ │ ├── load_extended_data.js
-│ │ ├── load_notes.js
-│ │ ├── load_students_curses.js
-│ │ ├── load_subjects.js
-│ │ ├── load_users.js
-│ │ └── run_seeders.js
-│ └── conexion_db.js
+├── 📁 scripts/                      # Scripts utilitarios
+│   ├── 📄 fix-navigation.js         # Fix de navegación
+│   └── 📄 clean-fix.js              # Limpieza de sesiones
 │
-├── .env
-├── clean-fix.js
-├── create-teacher-parent-chats.js
-├── fix-session-messaging.js
-├── force-messaging.js
-├── index.html
-├── init-messaging.js
-├── INSTALLATION.md
-├── load-extended-users.js
-├── package-lock.json
-├── package.json
-└── README.md
+├── 📁 utils/                        # Herramientas de desarrollo
+│   ├── 📄 test-db-connection.js     # Tests de BD
+│   └── 📄 generate-grades.js        # Generadores
+│
+├── 📁 server/                       # Configuración servidor
+│   ├── 📁 data/                     # Datos CSV (110 usuarios)
+│   └── 📁 seeders/                  # Scripts de población BD
+│
+└── 📁 docs/                         # Documentación completa
+    ├── 📄 DOCUMENTACION.md          # Docs técnica
+    ├── 📄 GUIA_USUARIO.md           # Manual usuario
+    ├── 📄 CHANGELOG.md              # Historial cambios
+    └── 📄 script.sql                # Esquema BD
 ```
+
+**Ver [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) para estructura completa**
 
 ## 🗄️ Database Schema
 
@@ -361,10 +324,11 @@ This project is developed as an educational platform prototype. All rights reser
 ## 📚 Documentación Completa
 
 ### 📖 Guías Principales
-- **[📚 DOCUMENTACION.md](DOCUMENTACION.md)** - Documentación técnica completa
-- **[👥 GUIA_USUARIO.md](GUIA_USUARIO.md)** - Manual de usuario por roles
-- **[📝 CHANGELOG.md](CHANGELOG.md)** - Historial de cambios y mejoras
-- **[🚀 INSTALLATION.md](INSTALLATION.md)** - Guía de instalación detallada
+- **[📚 DOCUMENTACION.md](docs/DOCUMENTACION.md)** - Documentación técnica completa
+- **[👥 GUIA_USUARIO.md](docs/GUIA_USUARIO.md)** - Manual de usuario por roles
+- **[📝 CHANGELOG.md](docs/CHANGELOG.md)** - Historial de cambios y mejoras
+- **[🚀 INSTALLATION.md](docs/INSTALLATION.md)** - Guía de instalación detallada
+- **[📁 PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Estructura del proyecto
 
 ### 🔧 Documentación Técnica
 - **[📊 API_DOCUMENTATION.md](docs/API_DOCUMENTATION.md)** - Endpoints y APIs
