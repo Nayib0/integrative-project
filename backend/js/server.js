@@ -4,7 +4,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import axios from 'axios';
-// import { setupRoutes } from './routes.js'; // Comentado temporalmente
+// // import { setupRoutes } from './routes.js'; // Comentado temporalmente
 
 // ES module equivalent of __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -23,6 +23,10 @@ app.use(express.json());
 
 // Setup API routes - comentado temporalmente
 // setupRoutes(app);
+
+// Import and setup student grade fix
+const { addStudentGradeEndpoints } = require('./student-grade-fix');
+addStudentGradeEndpoints(app);
 
 // Main route
 app.get('/', (req, res) => {

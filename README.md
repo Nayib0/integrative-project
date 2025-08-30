@@ -358,23 +358,55 @@ docker-compose up -d
 
 This project is developed as an educational platform prototype. All rights reserved.
 
-## 📞 Support
+## 📚 Documentación Completa
 
-For technical support or questions about the platform:
-- Review the documentation
-- Check the database schema in `docs/script.sql`
-- Test API endpoints using the built-in testing tools
-- Verify environment configuration
+### 📖 Guías Principales
+- **[📚 DOCUMENTACION.md](DOCUMENTACION.md)** - Documentación técnica completa
+- **[👥 GUIA_USUARIO.md](GUIA_USUARIO.md)** - Manual de usuario por roles
+- **[📝 CHANGELOG.md](CHANGELOG.md)** - Historial de cambios y mejoras
+- **[🚀 INSTALLATION.md](INSTALLATION.md)** - Guía de instalación detallada
 
-## 🔄 Version History
+### 🔧 Documentación Técnica
+- **[📊 API_DOCUMENTATION.md](docs/API_DOCUMENTATION.md)** - Endpoints y APIs
+- **[🗄️ script.sql](docs/script.sql)** - Esquema de base de datos
+- **[📋 ENDPOINTS.md](docs/ENDPOINTS.md)** - Lista de endpoints disponibles
 
-### v1.0.0 (Current)
-- Initial release with core functionality
-- User authentication and role management
-- AI chatbot integration with DeepSeek
-- Database integration with PostgreSQL
-- Responsive web interface
-- Educational content management
+## 📞 Soporte y Contacto
+
+### 🛠️ Soporte Técnico
+- **Email**: soporte@learnex.com
+- **Documentación**: Ver archivos `.md` en el proyecto
+- **Issues**: Reportar problemas en GitHub
+- **Testing**: Usar botón "🧪 Tests" en login
+
+### 📋 Recursos de Ayuda
+1. **Problemas de login**: Verificar credenciales en `GUIA_USUARIO.md`
+2. **Panel no aparece**: Sistema auto-reparable implementado
+3. **Grado no visible**: Funcionalidad automática para estudiantes
+4. **Conexión BD**: Verificar PostgreSQL y configuración
+
+## 🔄 Historial de Versiones
+
+### v2.0.3 (Actual) ✨
+- **🎓 Información de grado** para estudiantes
+- **🛠️ Sistema de navegación robusto** con auto-corrección
+- **🔐 Autenticación mejorada** con PostgreSQL
+- **📊 Carga dinámica** de calificaciones reales
+- **🎨 Interfaz optimizada** y responsiva
+- **🐛 Correcciones críticas** de login y navegación
+
+### v2.0.2
+- Arquitectura base del sistema
+- Integración IA con DeepSeek
+- Dashboard personalizado por roles
+- Base de datos con 110+ usuarios
+
+### v2.0.1
+- Setup inicial del proyecto
+- Sistema de autenticación básico
+- Estructura de carpetas y configuración
+
+**Ver [CHANGELOG.md](CHANGELOG.md) para detalles completos**
 
 ## 🎆 Version History
 

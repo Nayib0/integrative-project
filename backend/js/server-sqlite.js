@@ -240,6 +240,119 @@ app.get('/api/student-details/:studentId', async (req, res) => {
     }
 });
 
+// Get student grades
+app.get('/api/student-grades/:studentId', async (req, res) => {
+    const { studentId } = req.params;
+    
+    try {
+        const client = await sqlitePool.connect();
+        
+        const gradesResult = await client.query(`
+            SELECT n.calification, s.name_subject, 
+                   cst.id_teacher, u.name as teacher_name
+            FROM notes n
+            JOIN curse_subject_teacher cst ON n.id_cst = cst.id_cst
+            JOIN subjects s ON cst.id_subject = s.id_subjects
+            JOIN users u ON cst.id_teacher = u.id_user
+            WHERE n.id_student = ?
+            ORDER BY n.id_note DESC
+        `, [studentId]);
+        
+        const grades = gradesResult.rows.map(grade => ({
+            calification: grade.calification,
+            subject: grade.name_subject,
+            teacher: grade.teacher_name,
+            date: new Date().toLocaleDateString() // Placeholder date
+        }));
+        
+        res.json({ success: true, grades });
+        client.release();
+        
+    } catch (error) {
+        console.error('Error obteniendo calificaciones:', error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// Get student tasks (placeholder - no tasks table yet)
+app.get('/api/student-tasks/:studentId', async (req, res) => {
+    // Placeholder response since we don't have tasks table yet
+    const placeholderTasks = [
+        {
+            id: 1,
+            title: 'Ensayo de Literatura',
+            subject: 'Español',
+            due_date: '2024-01-25',
+            status: 'pending'
+        },
+        {
+            id: 2,
+            title: 'Ejercicios de Matemáticas',
+            subject: 'Matemáticas',
+            due_date: '2024-01-20',
+            status: 'completed'
+        }
+    ];
+    
+    res.json({ success: true, tasks: placeholderTasks });
+});
+
+// Get teacher grades (grades they've assigned)
+app.get('/api/teacher-grades/:teacherId', async (req, res) => {
+    const { teacherId } = req.params;
+    
+    try {
+        const client = await sqlitePool.connect();
+        
+        const gradesResult = await client.query(`
+            SELECT n.calification, s.name_subject,
+                   u.name as student_name, u.last_name as student_lastname
+            FROM notes n
+            JOIN curse_subject_teacher cst ON n.id_cst = cst.id_cst
+            JOIN subjects s ON cst.id_subject = s.id_subjects
+            JOIN users u ON n.id_student = u.id_user
+            WHERE cst.id_teacher = ?
+            ORDER BY n.id_note DESC
+        `, [teacherId]);
+        
+        const grades = gradesResult.rows.map(grade => ({
+            calification: grade.calification,
+            subject: grade.name_subject,
+            student: `${grade.student_name} ${grade.student_lastname}`,
+            date: new Date().toLocaleDateString()
+        }));
+        
+        res.json({ success: true, grades });
+        client.release();
+        
+    } catch (error) {
+        console.error('Error obteniendo calificaciones del profesor:', error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// Get teacher tasks (placeholder)
+app.get('/api/teacher-tasks/:teacherId', async (req, res) => {
+    const placeholderTasks = [
+        {
+            id: 1,
+            title: 'Revisar Ensayos',
+            subject: 'Español',
+            due_date: '2024-01-25',
+            status: 'pending'
+        },
+        {
+            id: 2,
+            title: 'Calificar Exámenes',
+            subject: 'Matemáticas',
+            due_date: '2024-01-22',
+            status: 'completed'
+        }
+    ];
+    
+    res.json({ success: true, tasks: placeholderTasks });
+});
+
 // AI Study Plan Generator
 app.post('/api/ai-study-plan', async (req, res) => {
     const { userId } = req.body;

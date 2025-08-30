@@ -195,6 +195,11 @@ async function handleLogin(e) {
             // Initialize AI features
             aiFeatures.init(result.user);
             
+            // Load student grade info if student
+            if (result.user.role === 'student') {
+                loadStudentGradeInfo(result.user.id);
+            }
+            
             console.log('✅ Login successful:', result.user.name);
         } else {
             showLoginError(result.error);
@@ -660,7 +665,7 @@ function generateDashboard() {
                     <div class="action-card" onclick="showView('grades')">
                         <i class="fas fa-star"></i>
                         <h3>Mis Calificaciones</h3>
-                        <p>Ver historial académico</p>
+                        <p>Ver historial académico y mi grado</p>
                     </div>
                     <div class="action-card" onclick="showView('achievements')">
                         <i class="fas fa-trophy"></i>
@@ -749,6 +754,7 @@ function generateDashboard() {
             <div class="welcome-text">
                 <h1>¡Bienvenido de vuelta!</h1>
                 <p>${user.username} • ${role.charAt(0).toUpperCase() + role.slice(1)}</p>
+                <div id="student-grade-info" style="margin-top: 10px;"></div>
             </div>
         </div>
         
@@ -851,97 +857,35 @@ function generateStudentsView() {
     `;
 }
 
-// Generate grades view with calculator and grade table
-// Shows grades by subject with edit capabilities
+// Generate grades view with real database data
 function generateGradesView() {
-    if (!AppState.data || !AppState.data.grades) {
-        return '<div style="text-align: center; padding: 50px;">Error: Data not available</div>';
-    }
-    
-    const gradesRows = AppState.data.grades.map(grade => `
-        <tr>
-            <td>${grade.subject}</td>
-            <td><span style="color: ${grade.grade >= 3.5 ? 'green' : 'red'}">${grade.grade}</span></td>
-            <td>${grade.date}</td>
-            <td>
-                <button class="btn-secondary" onclick="editGrade('${grade.subject}')">Editar</button>
-            </td>
-        </tr>
-    `).join('');
-    
     return `
-        <h1>Calificaciones</h1>
-        ${createGradeCalculator()}
-        <div class="table-container">
-            <div class="table-header">
-                <h2>Mis Calificaciones</h2>
-                <div>
-                    <button class="btn-secondary" onclick="generatePDFReport('Calificaciones')">Exportar PDF</button>
-                    <button class="btn-secondary" onclick="addGrade()">Nueva Calificación</button>
-                </div>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Materia</th>
-                        <th>Calificación</th>
-                        <th>Fecha</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${gradesRows}
-                </tbody>
-            </table>
+        <div id="grades-loading" style="text-align: center; padding: 50px;">
+            <i class="fas fa-spinner fa-spin"></i> Cargando calificaciones...
         </div>
+        <div id="grades-content" style="display: none;"></div>
+        
+        <script>
+            setTimeout(async () => {
+                await loadRealGradesData();
+            }, 100);
+        </script>
     `;
 }
 
-// Generate tasks/assignments view with status tracking
-// Shows task list with due dates and completion status
+// Generate tasks view with real database data
 function generateTasksView() {
-    if (!AppState.data || !AppState.data.tasks) {
-        return '<div style="text-align: center; padding: 50px;">Error: Data not available</div>';
-    }
-    
-    const tasksRows = AppState.data.tasks.map(task => `
-        <tr>
-            <td>${task.title}</td>
-            <td>${task.subject}</td>
-            <td>${task.dueDate}</td>
-            <td>
-                <span style="color: ${task.status === 'completed' ? 'green' : 'orange'};">
-                    ${task.status === 'completed' ? '✓ Completada' : '⏳ Pendiente'}
-                </span>
-            </td>
-            <td>
-                <button class="btn-secondary" onclick="viewTask(${task.id})">Ver Detalles</button>
-            </td>
-        </tr>
-    `).join('');
-    
     return `
-        <h1>Gestión de Tareas</h1>
-        <div class="table-container">
-            <div class="table-header">
-                <h2>Lista de Tareas</h2>
-                <button class="btn-secondary" onclick="addTask()">Nueva Tarea</button>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Título</th>
-                        <th>Materia</th>
-                        <th>Fecha Límite</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${tasksRows}
-                </tbody>
-            </table>
+        <div id="tasks-loading" style="text-align: center; padding: 50px;">
+            <i class="fas fa-spinner fa-spin"></i> Cargando tareas...
         </div>
+        <div id="tasks-content" style="display: none;"></div>
+        
+        <script>
+            setTimeout(async () => {
+                await loadRealTasksData();
+            }, 100);
+        </script>
     `;
 }
 
@@ -1503,3 +1447,98 @@ window.viewStudentDetails = viewStudentDetails;
 window.generateStudentAIReport = generateStudentAIReport;
 window.loadAIStudentsInsights = loadAIStudentsInsights;
 window.exportStudentsPDF = exportStudentsPDF;
+
+// Load real grades data
+async function loadRealGradesData() {
+    const user = AuthSystem.getCurrentUser();
+    if (!user) return;
+    
+    const loadingDiv = document.getElementById('grades-loading');
+    const contentDiv = document.getElementById('grades-content');
+    
+    if (!loadingDiv || !contentDiv) return;
+    
+    try {
+        dynamicLoader.init(user);
+        const gradesHTML = await dynamicLoader.generateDynamicGradesView();
+        
+        contentDiv.innerHTML = gradesHTML;
+        loadingDiv.style.display = 'none';
+        contentDiv.style.display = 'block';
+        
+    } catch (error) {
+        console.error('Error loading grades:', error);
+        contentDiv.innerHTML = `
+            <h1>Calificaciones</h1>
+            <div style="text-align: center; padding: 50px; color: red;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Error cargando calificaciones</h3>
+                <p>No se pudieron cargar los datos. Intenta nuevamente.</p>
+                <button class="btn-secondary" onclick="loadRealGradesData()">🔄 Reintentar</button>
+            </div>
+        `;
+        loadingDiv.style.display = 'none';
+        contentDiv.style.display = 'block';
+    }
+}
+
+// Load real tasks data
+async function loadRealTasksData() {
+    const user = AuthSystem.getCurrentUser();
+    if (!user) return;
+    
+    const loadingDiv = document.getElementById('tasks-loading');
+    const contentDiv = document.getElementById('tasks-content');
+    
+    if (!loadingDiv || !contentDiv) return;
+    
+    try {
+        dynamicLoader.init(user);
+        const tasksHTML = await dynamicLoader.generateDynamicTasksView();
+        
+        contentDiv.innerHTML = tasksHTML;
+        loadingDiv.style.display = 'none';
+        contentDiv.style.display = 'block';
+        
+    } catch (error) {
+        console.error('Error loading tasks:', error);
+        contentDiv.innerHTML = `
+            <h1>Tareas</h1>
+            <div style="text-align: center; padding: 50px; color: red;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Error cargando tareas</h3>
+                <p>No se pudieron cargar los datos. Intenta nuevamente.</p>
+                <button class="btn-secondary" onclick="loadRealTasksData()">🔄 Reintentar</button>
+            </div>
+        `;
+        loadingDiv.style.display = 'none';
+        contentDiv.style.display = 'block';
+    }
+}
+
+window.loadRealGradesData = loadRealGradesData;
+window.loadRealTasksData = loadRealTasksData;
+
+// Load student grade information for dashboard
+async function loadStudentGradeInfo(studentId) {
+    try {
+        const response = await fetch(`/api/dashboard/${studentId}/student`);
+        const result = await response.json();
+        
+        if (result.success && result.data.student) {
+            const student = result.data.student;
+            const gradeInfoDiv = document.getElementById('student-grade-info');
+            if (gradeInfoDiv) {
+                gradeInfoDiv.innerHTML = `
+                    <small style="color: #667eea; font-weight: 500;">
+                        📚 Grado ${student.grade}° • Promedio: ${student.average} • ${student.total_grades} calificaciones
+                    </small>
+                `;
+            }
+        }
+    } catch (error) {
+        console.error('Error loading student grade info:', error);
+    }
+}
+
+window.loadStudentGradeInfo = loadStudentGradeInfo;

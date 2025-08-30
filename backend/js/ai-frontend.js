@@ -428,6 +428,65 @@ const aiStyles = `
     margin-top: 0;
     color: #495057;
 }
+
+/* Dynamic Data Styles */
+.grades-summary, .tasks-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.summary-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.average-display, .count-display {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.status-badge.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.completed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge.in_progress {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.no-data-message {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6c757d;
+}
+
+.no-data-message i {
+    margin-bottom: 20px;
+}
+
+.no-data-message h3 {
+    margin-bottom: 10px;
+    color: #495057;
+}
 </style>
 `;
 
