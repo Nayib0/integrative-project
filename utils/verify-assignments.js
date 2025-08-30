@@ -4,9 +4,9 @@ async function verifyAssignments() {
     const client = await sqlitePool.connect();
     
     try {
-        console.log('🔍 Verificando asignaciones completas...\n');
+        console.log('🔍 Verifying complete assignments...\n');
         
-        // Verificar profesor específico (Pedro Sanchez - ID 7)
+        // Verify specific teacher (Pedro Sanchez - ID 7)
         const teacherInfo = await client.query(`
             SELECT u.name, u.last_name, u.mail
             FROM users u
@@ -15,10 +15,10 @@ async function verifyAssignments() {
         
         if (teacherInfo.rows.length > 0) {
             const teacher = teacherInfo.rows[0];
-            console.log(`👨🏫 Profesor: ${teacher.name} ${teacher.last_name}`);
+            console.log(`👨🏫 Teacher: ${teacher.name} ${teacher.last_name}`);
             console.log(`📧 Email: ${teacher.mail}\n`);
             
-            // Sus asignaciones
+            // Their assignments
             const assignments = await client.query(`
                 SELECT s.name_subject, c.grade, c.school_year
                 FROM curse_subject_teacher cst
@@ -28,12 +28,12 @@ async function verifyAssignments() {
                 ORDER BY c.grade, s.name_subject
             `);
             
-            console.log('📚 Materias y cursos asignados:');
+            console.log('📚 Assigned subjects and courses:');
             assignments.rows.forEach(assignment => {
-                console.log(`   • ${assignment.name_subject} - Grado ${assignment.grade} (${assignment.school_year})`);
+                console.log(`   • ${assignment.name_subject} - Grade ${assignment.grade} (${assignment.school_year})`);
             });
             
-            // Sus estudiantes
+            // Their students
             const students = await client.query(`
                 SELECT DISTINCT u.id_user, u.name, u.last_name, c.grade
                 FROM users u
@@ -44,12 +44,12 @@ async function verifyAssignments() {
                 ORDER BY c.grade, u.name
             `);
             
-            console.log(`\n👥 Estudiantes asignados (${students.rows.length}):`);
+            console.log(`\n👥 Assigned students (${students.rows.length}):`);
             let currentGrade = '';
             students.rows.forEach(student => {
                 if (student.grade !== currentGrade) {
                     currentGrade = student.grade;
-                    console.log(`\n   📚 Grado ${student.grade}:`);
+                    console.log(`\n   📚 Grade ${student.grade}:`);
                 }
                 console.log(`     • ${student.name} ${student.last_name}`);
             });
@@ -67,14 +67,14 @@ async function verifyAssignments() {
             
             if (grades.rows[0].total_grades > 0) {
                 const gradeStats = grades.rows[0];
-                console.log(`\n📊 Estadísticas de calificaciones:`);
-                console.log(`   • Total calificaciones: ${gradeStats.total_grades}`);
-                console.log(`   • Promedio: ${parseFloat(gradeStats.average).toFixed(1)}`);
-                console.log(`   • Rango: ${gradeStats.min_grade} - ${gradeStats.max_grade}`);
+                console.log(`\n📊 Grade statistics:`);
+                console.log(`   • Total grades: ${gradeStats.total_grades}`);
+                console.log(`   • Average: ${parseFloat(gradeStats.average).toFixed(1)}`);
+                console.log(`   • Range: ${gradeStats.min_grade} - ${gradeStats.max_grade}`);
             }
         }
         
-        // Verificar estudiante específico (Ana Rodriguez - ID 2)
+        // Verify specific student (Ana Rodriguez - ID 2)
         console.log('\n' + '='.repeat(50) + '\n');
         
         const studentInfo = await client.query(`
@@ -85,10 +85,10 @@ async function verifyAssignments() {
         
         if (studentInfo.rows.length > 0) {
             const student = studentInfo.rows[0];
-            console.log(`👩🎓 Estudiante: ${student.name} ${student.last_name}`);
+            console.log(`👩🎓 Student: ${student.name} ${student.last_name}`);
             console.log(`📧 Email: ${student.mail}\n`);
             
-            // Su curso
+            // Their course
             const course = await client.query(`
                 SELECT c.grade, c.school_year
                 FROM students_curses sc
@@ -97,7 +97,7 @@ async function verifyAssignments() {
             `);
             
             if (course.rows.length > 0) {
-                console.log(`📚 Curso: Grado ${course.rows[0].grade} (${course.rows[0].school_year})`);
+                console.log(`📚 Course: Grade ${course.rows[0].grade} (${course.rows[0].school_year})`);
             }
             
             // Sus calificaciones por materia
@@ -115,9 +115,9 @@ async function verifyAssignments() {
                 ORDER BY s.name_subject
             `);
             
-            console.log(`\n📊 Calificaciones por materia:`);
+            console.log(`\n📊 Grades by subject:`);
             studentGrades.rows.forEach(grade => {
-                console.log(`   • ${grade.name_subject}: ${parseFloat(grade.average).toFixed(1)} (${grade.grade_count} calificaciones) - Prof. ${grade.teacher_name}`);
+                console.log(`   • ${grade.name_subject}: ${parseFloat(grade.average).toFixed(1)} (${grade.grade_count} grades) - Prof. ${grade.teacher_name}`);
             });
             
             // Promedio general
@@ -129,12 +129,12 @@ async function verifyAssignments() {
             `);
             
             if (overallAverage.rows[0].total_grades > 0) {
-                console.log(`\n🎯 Promedio general: ${parseFloat(overallAverage.rows[0].overall_average).toFixed(1)}`);
-                console.log(`📝 Total calificaciones: ${overallAverage.rows[0].total_grades}`);
+                console.log(`\n🎯 Overall average: ${parseFloat(overallAverage.rows[0].overall_average).toFixed(1)}`);
+                console.log(`📝 Total grades: ${overallAverage.rows[0].total_grades}`);
             }
         }
         
-        console.log('\n✅ Verificación completada - Todo está correctamente asignado!');
+        console.log('\n✅ Verification completed - Everything is correctly assigned!');
         
     } catch (error) {
         console.error('❌ Error:', error);

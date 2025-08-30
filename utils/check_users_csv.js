@@ -27,7 +27,7 @@ async function checkUsersCSV() {
         console.log('❌ Emails duplicados encontrados:', duplicateEmails);
     }
     
-    // Verificar usuarios específicos que faltan
+    // Check for missing specific users
     const missingIds = [91, 92, 93, 94];
     console.log('\n🔍 Verificando usuarios específicos:');
     missingIds.forEach(id => {

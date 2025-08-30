@@ -167,7 +167,7 @@ async function handleLogin(e) {
     
     // Validate input fields
     if (!username || !password) {
-        showLoginError('Por favor ingrese usuario y contraseña');
+        showLoginError('Please enter username and password');
         return;
     }
     
@@ -206,7 +206,7 @@ async function handleLogin(e) {
             console.log('❌ Login failed:', result.error);
         }
     } catch (error) {
-        showLoginError('Error de conexión');
+        showLoginError('Connection error');
         console.error('Login error:', error);
     }
 }
@@ -244,7 +244,7 @@ function loginUser(role, username) {
     const user = { role, username, loginTime: new Date().toISOString() };
     AppState.currentUser = user;
     
-    // Guardar sesión en localStorage
+    // Save session in localStorage
     localStorage.setItem('learnex_user', JSON.stringify(user));
     
     document.getElementById('userRole').textContent = `${username} (${role})`;
@@ -258,7 +258,7 @@ function logout() {
     AuthSystem.logout();
     AppState.currentUser = null;
     
-    // Ocultar dashboard y mostrar login
+    // Hide dashboard and show login
     document.getElementById('dashboardScreen').style.display = 'none';
     showScreen('loginScreen');
     document.getElementById('loginForm').reset();
@@ -286,7 +286,7 @@ function setupNavigation(role) {
     
     navMenu.innerHTML = '';
     
-    // Solo ocultar en móvil
+    // Only hide on mobile
     if (window.innerWidth < 768) {
         navMenu.classList.add('mobile-hidden');
     }
@@ -308,7 +308,7 @@ function setupNavigation(role) {
             document.querySelectorAll('.nav-menu a').forEach(a => a.classList.remove('active'));
             e.target.closest('a').classList.add('active');
             
-            // Cerrar menú en móvil
+            // Close menu on mobile
             if (window.innerWidth < 768) {
                 navMenu.classList.add('mobile-hidden');
             }
@@ -321,14 +321,14 @@ function setupNavigation(role) {
 }
 
 function showView(viewName) {
-    // Proteger rutas
+    // Protect routes
     const user = AuthSystem.getCurrentUser();
     if (!user) {
         showScreen('loginScreen');
         return;
     }
     
-    // Verificar permisos específicos
+    // Check specific permissions
     const protectedRoutes = {
         'users': ['admin'],
         'backup-system': ['admin'],
@@ -348,10 +348,10 @@ function showView(viewName) {
     AppState.currentView = viewName;
     const contentArea = document.getElementById('contentArea');
     
-    // Mostrar loading mientras carga
+    // Show loading while loading
     contentArea.innerHTML = '<div style="text-align: center; padding: 50px;"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>';
     
-    // Cargar contenido después de un breve delay
+    // Load content after brief delay
     setTimeout(() => {
         renderViewContent(viewName, contentArea);
     }, 50);
@@ -1262,7 +1262,7 @@ async function loadStudentsData() {
             containerDiv.style.display = 'block';
         }
     } catch (error) {
-        console.error('Error cargando estudiantes:', error);
+        console.error('Error loading students:', error);
         tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: red;">Error cargando datos</td></tr>';
         loadingDiv.style.display = 'none';
         containerDiv.style.display = 'block';
@@ -1308,7 +1308,7 @@ async function viewStudentDetails(studentId) {
             `);
         }
     } catch (error) {
-        console.error('Error obteniendo detalles del estudiante:', error);
+        console.error('Error getting student details:', error);
         showModal(`
             <h2>❌ Error</h2>
             <p>Error de conexión al obtener los detalles</p>
@@ -1367,7 +1367,7 @@ async function generateStudentAIReport(studentId) {
             `);
         }
     } catch (error) {
-        console.error('Error generando reporte IA:', error);
+        console.error('Error generating AI report:', error);
         showModal(`
             <h2>❌ Error</h2>
             <p>Error de conexión al generar el reporte</p>
@@ -1413,7 +1413,7 @@ async function loadAIStudentsInsights() {
             `);
         }
     } catch (error) {
-        console.error('Error cargando insights IA:', error);
+        console.error('Error loading AI insights:', error);
     }
 }
 

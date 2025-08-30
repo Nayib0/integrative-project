@@ -6,7 +6,7 @@ async function fixDuplicates() {
     const seenEmails = new Set();
     const validUsers = [];
     
-    // Leer todos los usuarios
+    // Read all users
     await new Promise((resolve, reject) => {
         fs.createReadStream('server/data/01_users.csv')
             .pipe(csv({ separator: ";" }))
@@ -19,7 +19,7 @@ async function fixDuplicates() {
     
     console.log('📊 Total usuarios en CSV original:', users.length);
     
-    // Filtrar duplicados por email, manteniendo solo el primero
+    // Filter duplicates by email, keeping only the first one
     users.forEach(user => {
         if (!seenEmails.has(user.mail)) {
             seenEmails.add(user.mail);
@@ -31,17 +31,17 @@ async function fixDuplicates() {
     
     console.log('✅ Usuarios únicos después de filtrar:', validUsers.length);
     
-    // Crear nuevo CSV sin duplicados
+    // Create new CSV without duplicates
     const header = 'id_user;name;last_name;mail;password;rol;state\n';
     const csvContent = header + validUsers.map(user => 
         `${user.id_user};${user.name};${user.last_name};${user.mail};${user.password};${user.rol};${user.state}`
     ).join('\n');
     
-    // Guardar el archivo corregido
+    // Save the corrected file
     fs.writeFileSync('server/data/01_users.csv', csvContent);
     console.log('💾 Archivo CSV actualizado sin duplicados');
     
-    // Ahora actualizar students_curses para eliminar referencias a usuarios eliminados
+    // Now update students _curses to remove references to deleted users
     const validUserIds = new Set(validUsers.map(u => parseInt(u.id_user)));
     const studentsData = [];
     
@@ -67,7 +67,7 @@ async function fixDuplicates() {
     console.log('📚 Students_curses original:', studentsData.length);
     console.log('✅ Students_curses válidos:', validStudentsCurses.length);
     
-    // Guardar students_curses corregido
+    // Save students _curses fixed
     const studentsHeader = 'id_student_curse;id_user;id_curse\n';
     const studentsContent = studentsHeader + validStudentsCurses.map(row => 
         `${row.id_student_curse};${row.id_user};${row.id_curse}`

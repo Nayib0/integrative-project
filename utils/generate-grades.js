@@ -4,12 +4,12 @@ async function generateGrades() {
     const client = await sqlitePool.connect();
     
     try {
-        console.log('📊 Generando calificaciones...\n');
+        console.log('📊 Generating grades...\n');
         
-        // Limpiar calificaciones existentes
+        // Clear existing grades
         await client.query('DELETE FROM notes');
         
-        // Obtener asignaciones y estudiantes
+        // Get assignments and students
         const assignments = await client.query(`
             SELECT cst.id_cst, cst.id_teacher, cst.id_curse, cst.id_subject,
                    s.name_subject, c.grade, u.name as teacher_name
@@ -25,23 +25,23 @@ async function generateGrades() {
             JOIN users u ON sc.id_user = u.id_user
         `);
         
-        console.log(`📋 Asignaciones: ${assignments.rows.length}`);
-        console.log(`👥 Estudiantes: ${students.rows.length}\n`);
+        console.log(`📋 Assignments: ${assignments.rows.length}`);
+        console.log(`👥 Students: ${students.rows.length}\n`);
         
         let gradeId = 1;
         let totalGrades = 0;
         
-        // Generar calificaciones para cada asignación
+        // Generate grades for each assignment
         for (const assignment of assignments.rows) {
-            // Obtener estudiantes del curso de esta asignación
+            // Get students from this assignment's course
             const courseStudents = students.rows.filter(s => s.id_curse === assignment.id_curse);
             
-            // Generar 2-4 calificaciones por estudiante por materia
+            // Generate 2-4 grades per student per subject
             for (const student of courseStudents) {
-                const numGrades = Math.floor(Math.random() * 3) + 2; // 2-4 calificaciones
+                const numGrades = Math.floor(Math.random() * 3) + 2; // 2-4 grades
                 
                 for (let i = 0; i < numGrades; i++) {
-                    // Generar calificación entre 2.0 y 5.0
+                    // Generate grade between 2.0 and 5.0
                     const grade = (Math.random() * 3 + 2).toFixed(1);
                     
                     await client.query(
@@ -54,9 +54,9 @@ async function generateGrades() {
             }
         }
         
-        console.log(`✅ ${totalGrades} calificaciones generadas\n`);
+        console.log(`✅ ${totalGrades} grades generated\n`);
         
-        // Mostrar estadísticas por profesor
+        // Show statistics by teacher
         const teacherStats = await client.query(`
             SELECT u.name, u.last_name,
                    COUNT(n.id_note) as total_grades,
@@ -72,16 +72,16 @@ async function generateGrades() {
             ORDER BY u.name
         `);
         
-        console.log('📊 Estadísticas por profesor:\n');
+        console.log('📊 Statistics by teacher:\n');
         teacherStats.rows.forEach(teacher => {
             console.log(`👨🏫 ${teacher.name} ${teacher.last_name}:`);
-            console.log(`   📝 Calificaciones asignadas: ${teacher.total_grades}`);
-            console.log(`   👥 Estudiantes: ${teacher.total_students}`);
-            console.log(`   📖 Materias: ${teacher.total_subjects}`);
-            console.log(`   📊 Promedio: ${parseFloat(teacher.average_grade).toFixed(1)}\n`);
+            console.log(`   📝 Grades assigned: ${teacher.total_grades}`);
+            console.log(`   👥 Students: ${teacher.total_students}`);
+            console.log(`   📖 Subjects: ${teacher.total_subjects}`);
+            console.log(`   📊 Average: ${parseFloat(teacher.average_grade).toFixed(1)}\n`);
         });
         
-        // Estadísticas por estudiante
+        // Statistics by student
         const studentStats = await client.query(`
             SELECT u.name, u.last_name,
                    COUNT(n.id_note) as total_grades,
@@ -94,12 +94,12 @@ async function generateGrades() {
             LIMIT 10
         `);
         
-        console.log('🏆 Top 10 estudiantes por promedio:\n');
+        console.log('🏆 Top 10 students by average:\n');
         studentStats.rows.forEach((student, index) => {
-            console.log(`${index + 1}. ${student.name} ${student.last_name}: ${parseFloat(student.average_grade).toFixed(1)} (${student.total_grades} calificaciones)`);
+            console.log(`${index + 1}. ${student.name} ${student.last_name}: ${parseFloat(student.average_grade).toFixed(1)} (${student.total_grades} grades)`);
         });
         
-        console.log('\n🎉 Calificaciones generadas exitosamente!');
+        console.log('\n🎉 Grades generated successfully!');
         
     } catch (error) {
         console.error('❌ Error:', error);

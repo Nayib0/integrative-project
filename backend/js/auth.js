@@ -51,7 +51,7 @@ const AuthSystem = {
             return { success: false, error: result.error };
         } catch (error) {
             console.error('Auth error:', error);
-            return { success: false, error: 'Error de conexión' };
+            return { success: false, error: 'Connection error' };
         }
     },
     
@@ -141,7 +141,7 @@ const AuthSystem = {
         // Check session validity every minute
         this.sessionTimer = setInterval(() => {
             if (!this.isValidSession()) {
-                alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+                alert('Your session has expired. Please log in again.');
                 window.location.reload();
             }
         }, 60000); // Check every minute
@@ -203,16 +203,16 @@ const RouteGuard = {
     // Redirect user to login screen
     redirectToLogin() {
         showScreen('loginScreen');
-        showModal('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+        showModal('Your session has expired. Please log in again.');
     },
     
     // Show access denied modal to user
     showAccessDenied() {
         showModal(`
-            <h2>🚫 Acceso Denegado</h2>
-            <p>No tienes permisos para acceder a esta sección.</p>
-            <p>Tu rol actual no permite esta acción.</p>
-            <button class="btn-primary" onclick="closeModal()">Entendido</button>
+            <h2>🚫 Access Denied</h2>
+            <p>You don't have permission to access this section.</p>
+            <p>Your current role doesn't allow this action.</p>
+            <button class="btn-primary" onclick="closeModal()">Understood</button>
         `);
     }
 };

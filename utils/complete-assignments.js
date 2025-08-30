@@ -4,30 +4,30 @@ async function completeTeacherAssignments() {
     const client = await sqlitePool.connect();
     
     try {
-        console.log('🔧 Completando asignaciones de profesores...\n');
+        console.log('🔧 Completing teacher assignments...\n');
         
-        // Obtener profesores, cursos y materias
+        // Get teachers, courses and subjects
         const teachers = await client.query("SELECT id_user, name, last_name FROM users WHERE rol = 'teacher'");
         const courses = await client.query("SELECT id_curse, grade FROM curses ORDER BY id_curse");
         const subjects = await client.query("SELECT id_subjects, name_subject FROM subjects ORDER BY id_subjects");
         
-        console.log(`👨🏫 Profesores: ${teachers.rows.length}`);
-        console.log(`📚 Cursos: ${courses.rows.length}`);
-        console.log(`📖 Materias: ${subjects.rows.length}\n`);
+        console.log(`👨🏫 Teachers: ${teachers.rows.length}`);
+        console.log(`📚 Courses: ${courses.rows.length}`);
+        console.log(`📖 Subjects: ${subjects.rows.length}\n`);
         
-        // Limpiar asignaciones existentes
+        // Clear existing assignments
         await client.query('DELETE FROM curse_subject_teacher');
-        console.log('🧹 Asignaciones anteriores eliminadas\n');
+        console.log('🧹 Previous assignments deleted\n');
         
-        // Crear asignaciones sistemáticas
+        // Create systematic assignments
         let assignmentId = 1;
         const assignments = [];
         
-        // Asignar cada profesor a múltiples materias y cursos
+        // Assign each teacher to multiple subjects and courses
         for (let i = 0; i < teachers.rows.length; i++) {
             const teacher = teachers.rows[i];
             
-            // Cada profesor enseña 2-3 materias en 2-3 cursos
+            // Each teacher teaches 2-3 subjects in 2-3 courses
             const teacherSubjects = subjects.rows.slice(i * 2, (i * 2) + 3);
             const teacherCourses = courses.rows.slice(i, i + 3);
             
@@ -48,7 +48,7 @@ async function completeTeacherAssignments() {
             }
         }
         
-        // Insertar asignaciones
+        // Insert assignments
         for (const assignment of assignments) {
             await client.query(
                 'INSERT INTO curse_subject_teacher (id_cst, id_curse, id_subject, id_teacher) VALUES (?, ?, ?, ?)',
@@ -56,10 +56,10 @@ async function completeTeacherAssignments() {
             );
         }
         
-        console.log(`✅ ${assignments.length} asignaciones creadas\n`);
+        console.log(`✅ ${assignments.length} assignments created\n`);
         
-        // Mostrar resumen por profesor
-        console.log('📋 Resumen de asignaciones:\n');
+        // Show summary by teacher
+        console.log('📋 Assignment summary:\n');
         for (const teacher of teachers.rows) {
             const teacherAssignments = assignments.filter(a => a.id_teacher === teacher.id_user);
             console.log(`👨🏫 ${teacher.name} ${teacher.last_name}:`);
@@ -67,12 +67,12 @@ async function completeTeacherAssignments() {
             const subjects = [...new Set(teacherAssignments.map(a => a.subject_name))];
             const courses = [...new Set(teacherAssignments.map(a => a.course_name))];
             
-            console.log(`   📖 Materias: ${subjects.join(', ')}`);
-            console.log(`   📚 Cursos: ${courses.join(', ')}`);
-            console.log(`   🔢 Total asignaciones: ${teacherAssignments.length}\n`);
+            console.log(`   📖 Subjects: ${subjects.join(', ')}`);
+            console.log(`   📚 Courses: ${courses.join(', ')}`);
+            console.log(`   🔢 Total assignments: ${teacherAssignments.length}\n`);
         }
         
-        // Verificar estudiantes por curso
+        // Check students per course
         const studentsPerCourse = await client.query(`
             SELECT c.grade, COUNT(sc.id_user) as student_count
             FROM curses c
@@ -81,12 +81,12 @@ async function completeTeacherAssignments() {
             ORDER BY c.id_curse
         `);
         
-        console.log('👥 Estudiantes por curso:');
+        console.log('👥 Students per course:');
         studentsPerCourse.rows.forEach(row => {
-            console.log(`   📚 ${row.grade}: ${row.student_count} estudiantes`);
+            console.log(`   📚 ${row.grade}: ${row.student_count} students`);
         });
         
-        console.log('\n🎉 Asignaciones completadas exitosamente!');
+        console.log('\n🎉 Assignments completed successfully!');
         
     } catch (error) {
         console.error('❌ Error:', error);

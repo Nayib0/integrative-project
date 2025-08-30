@@ -1,6 +1,6 @@
 /**
- * Script para cargar usuarios extendidos en Learnex
- * Ejecutar con: node load-extended-users.js
+ * Script to load extended users in Learnex
+ * Run with: node load-extended-users.js
  */
 
 const { loadExtendedData } = require('./server/seeders/load_extended_data');

@@ -6,14 +6,14 @@ async function testDatabaseConnection() {
     try {
         const client = await sqlitePool.connect();
         
-        // Test 1: Conexión básica
+        // Test 1: Basic connection
         console.log('✅ Test 1: Conexión establecida');
         
-        // Test 2: Contar usuarios
+        // Test 2: Count users
         const usersResult = await client.query('SELECT COUNT(*) as count FROM users');
         console.log(`✅ Test 2: ${usersResult.rows[0].count} usuarios en la base de datos`);
         
-        // Test 3: Verificar credenciales de admin
+        // Test 3: Verify admin credentials
         const adminResult = await client.query(
             'SELECT id_user, name, last_name, mail, rol FROM users WHERE mail = ? AND password = ?',
             ['carlos.gomez@mail.com', 'pass123']
@@ -26,7 +26,7 @@ async function testDatabaseConnection() {
             console.log('❌ Test 3: Admin no encontrado');
         }
         
-        // Test 4: Verificar estudiante
+        // Test 4: Verify student
         const studentResult = await client.query(
             'SELECT id_user, name, last_name, mail, rol FROM users WHERE mail = ? AND password = ?',
             ['ana.rodriguez@mail.com', 'ana456']
@@ -39,7 +39,7 @@ async function testDatabaseConnection() {
             console.log('❌ Test 4: Estudiante no encontrado');
         }
         
-        // Test 5: Verificar profesor
+        // Test 5: Verify teacher
         const teacherResult = await client.query(
             'SELECT id_user, name, last_name, mail, rol FROM users WHERE mail = ? AND password = ?',
             ['pedro.sanchez@mail.com', 'ped987']
@@ -52,7 +52,7 @@ async function testDatabaseConnection() {
             console.log('❌ Test 5: Profesor no encontrado');
         }
         
-        // Test 6: Estadísticas por rol
+        // Test 6: Statistics by role
         const stats = await Promise.all([
             client.query("SELECT COUNT(*) as count FROM users WHERE rol = 'student'"),
             client.query("SELECT COUNT(*) as count FROM users WHERE rol = 'teacher'"),
@@ -72,7 +72,7 @@ async function testDatabaseConnection() {
         console.log(`   📖 Materias: ${stats[5].rows[0].count}`);
         console.log(`   📊 Calificaciones: ${stats[6].rows[0].count}`);
         
-        // Test 7: Probar endpoint de autenticación simulado
+        // Test 7: Test simulated authentication endpoint
         console.log('\n🔐 Simulando autenticación...');
         
         const authTest = await client.query(
