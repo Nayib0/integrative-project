@@ -192,6 +192,9 @@ async function handleLogin(e) {
                 setTimeout(initializeChatbot, 500);
             }
             
+            // Initialize AI features
+            aiFeatures.init(result.user);
+            
             console.log('✅ Login successful:', result.user.name);
         } else {
             showLoginError(result.error);
@@ -737,6 +740,8 @@ function generateDashboard() {
     }
     
     return `
+        <div id="ai-dashboard-content"></div>
+        
         <div class="welcome-header">
             <div class="user-avatar">
                 <i class="fas fa-user-circle"></i>
@@ -791,52 +796,58 @@ function generateDashboard() {
     `;
 }
 
-// Generate students management view with table and filters
-// Shows student list with grades, attendance, and actions
+// Generate students management view with real database data
 function generateStudentsView() {
-    if (!AppState.data || !AppState.data.students) {
-        return '<div style="text-align: center; padding: 50px;">Error: Data not available</div>';
+    const user = AuthSystem.getCurrentUser();
+    if (!user) {
+        return '<div style="text-align: center; padding: 50px;">Error: Usuario no autenticado</div>';
     }
     
-    const studentsRows = AppState.data.students.map(student => `
-        <tr>
-            <td>${student.name}</td>
-            <td>${student.grade}</td>
-            <td>${student.average}</td>
-            <td>${student.attendance}%</td>
-            <td>
-                <button class="btn-secondary" onclick="viewStudent(${student.id})">Ver Detalles</button>
-                <button class="btn-secondary" onclick="generatePDFReport('Estudiante')">PDF</button>
-            </td>
-        </tr>
-    `).join('');
-    
     return `
-        <h1>Gestión de Estudiantes</h1>
-        ${addAdvancedFilters()}
-        <div class="table-container">
-            <div class="table-header">
-                <h2>Lista de Estudiantes</h2>
-                <div>
-                    <button class="btn-secondary" onclick="generatePDFReport('Estudiantes')">Exportar PDF</button>
-                    <button class="btn-secondary" onclick="addStudent()">Agregar Estudiante</button>
-                </div>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Grado</th>
-                        <th>Promedio</th>
-                        <th>Asistencia</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${studentsRows}
-                </tbody>
-            </table>
+        <div id="ai-students-insights"></div>
+        
+        <h1>Mis Estudiantes</h1>
+        
+        <div class="students-actions">
+            <button class="btn-ai" onclick="loadAIStudentsInsights()">🤖 Análisis IA de Estudiantes</button>
+            <button class="btn-secondary" onclick="loadStudentsData()">🔄 Actualizar Lista</button>
         </div>
+        
+        <div id="students-loading" style="text-align: center; padding: 20px;">
+            <i class="fas fa-spinner fa-spin"></i> Cargando estudiantes...
+        </div>
+        
+        <div id="students-container" style="display: none;">
+            <div class="table-container">
+                <div class="table-header">
+                    <h2>Lista de Estudiantes</h2>
+                    <div>
+                        <button class="btn-secondary" onclick="exportStudentsPDF()">📄 Exportar PDF</button>
+                    </div>
+                </div>
+                <table id="students-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Promedio</th>
+                            <th>Total Calificaciones</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="students-tbody">
+                        <!-- Datos cargados dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <script>
+            // Auto-load students when view is shown
+            setTimeout(() => {
+                loadStudentsData();
+            }, 100);
+        </script>
     `;
 }
 
@@ -1255,6 +1266,229 @@ function setupMobileMenuClose() {
     });
 }
 
+// Load students data from database
+async function loadStudentsData() {
+    const user = AuthSystem.getCurrentUser();
+    if (!user) return;
+    
+    const loadingDiv = document.getElementById('students-loading');
+    const containerDiv = document.getElementById('students-container');
+    const tbody = document.getElementById('students-tbody');
+    
+    if (!tbody) return;
+    
+    try {
+        loadingDiv.style.display = 'block';
+        containerDiv.style.display = 'none';
+        
+        const response = await fetch(`/api/teacher-students/${user.id}`);
+        const result = await response.json();
+        
+        if (result.success) {
+            tbody.innerHTML = result.students.map(student => `
+                <tr>
+                    <td>${student.name}</td>
+                    <td>${student.email}</td>
+                    <td><span style="color: ${parseFloat(student.average) >= 3.5 ? 'green' : 'red'}">${student.average}</span></td>
+                    <td>${student.totalGrades}</td>
+                    <td>
+                        <button class="btn-secondary" onclick="viewStudentDetails(${student.id})">👁️ Ver Detalles</button>
+                        <button class="btn-secondary" onclick="generateStudentAIReport(${student.id})">🤖 Reporte IA</button>
+                    </td>
+                </tr>
+            `).join('');
+            
+            loadingDiv.style.display = 'none';
+            containerDiv.style.display = 'block';
+            
+            // Show summary
+            const totalStudents = result.students.length;
+            const avgGrade = result.students.reduce((sum, s) => sum + (parseFloat(s.average) || 0), 0) / totalStudents;
+            
+            showModal(`
+                <h2>📊 Resumen de Estudiantes</h2>
+                <p><strong>Total estudiantes:</strong> ${totalStudents}</p>
+                <p><strong>Promedio general:</strong> ${avgGrade.toFixed(1)}</p>
+                <p><strong>Estudiantes con promedio ≥ 3.5:</strong> ${result.students.filter(s => parseFloat(s.average) >= 3.5).length}</p>
+                <button class="btn-primary" onclick="closeModal()">Cerrar</button>
+            `);
+        } else {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No se encontraron estudiantes</td></tr>';
+            loadingDiv.style.display = 'none';
+            containerDiv.style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error cargando estudiantes:', error);
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: red;">Error cargando datos</td></tr>';
+        loadingDiv.style.display = 'none';
+        containerDiv.style.display = 'block';
+    }
+}
+
+// View detailed student information
+async function viewStudentDetails(studentId) {
+    try {
+        const response = await fetch(`/api/student-details/${studentId}`);
+        const result = await response.json();
+        
+        if (result.success) {
+            const student = result.student;
+            const gradesHtml = student.grades.map(grade => 
+                `<li>${grade.name_subject}: <strong>${grade.calification}</strong></li>`
+            ).join('');
+            
+            showModal(`
+                <h2>👨‍🎓 Detalles del Estudiante</h2>
+                <div style="text-align: left;">
+                    <p><strong>Nombre:</strong> ${student.name}</p>
+                    <p><strong>Email:</strong> ${student.email}</p>
+                    <p><strong>Promedio:</strong> <span style="color: ${parseFloat(student.average) >= 3.5 ? 'green' : 'red'}">${student.average}</span></p>
+                    <p><strong>Curso:</strong> ${student.course ? `${student.course.grade} (${student.course.school_year})` : 'N/A'}</p>
+                    
+                    <h3>📊 Calificaciones:</h3>
+                    <ul style="max-height: 200px; overflow-y: auto;">
+                        ${gradesHtml || '<li>No hay calificaciones registradas</li>'}
+                    </ul>
+                    
+                    <div style="margin-top: 20px;">
+                        <button class="btn-secondary" onclick="generateStudentAIReport(${student.id})">🤖 Generar Reporte IA</button>
+                        <button class="btn-primary" onclick="closeModal()">Cerrar</button>
+                    </div>
+                </div>
+            `);
+        } else {
+            showModal(`
+                <h2>❌ Error</h2>
+                <p>${result.message}</p>
+                <button class="btn-primary" onclick="closeModal()">Cerrar</button>
+            `);
+        }
+    } catch (error) {
+        console.error('Error obteniendo detalles del estudiante:', error);
+        showModal(`
+            <h2>❌ Error</h2>
+            <p>Error de conexión al obtener los detalles</p>
+            <button class="btn-primary" onclick="closeModal()">Cerrar</button>
+        `);
+    }
+}
+
+// Generate AI report for student
+async function generateStudentAIReport(studentId) {
+    try {
+        showModal(`
+            <h2>🤖 Generando Reporte IA...</h2>
+            <div style="text-align: center; padding: 20px;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 2em;"></i>
+                <p>La IA está analizando el rendimiento del estudiante...</p>
+            </div>
+        `);
+        
+        const response = await fetch('/api/ai-study-plan', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: studentId })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            const plan = result.studyPlan;
+            showModal(`
+                <h2>🤖 Reporte IA del Estudiante</h2>
+                <div style="text-align: left;">
+                    <h3>📊 Análisis de Rendimiento</h3>
+                    <p>Basado en las calificaciones actuales, la IA recomienda:</p>
+                    
+                    <h4>🎯 Metas Sugeridas:</h4>
+                    <ul>
+                        ${(plan.goals || ['Mejorar promedio general', 'Mantener constancia en estudios']).map(goal => `<li>${goal}</li>`).join('')}
+                    </ul>
+                    
+                    <h4>🧠 Técnicas Recomendadas:</h4>
+                    <ul>
+                        ${(plan.techniques || ['Mapas mentales', 'Resúmenes', 'Práctica activa']).map(technique => `<li>${technique}</li>`).join('')}
+                    </ul>
+                    
+                    <div style="margin-top: 20px;">
+                        <button class="btn-primary" onclick="closeModal()">Cerrar</button>
+                    </div>
+                </div>
+            `);
+        } else {
+            showModal(`
+                <h2>❌ Error</h2>
+                <p>No se pudo generar el reporte IA</p>
+                <button class="btn-primary" onclick="closeModal()">Cerrar</button>
+            `);
+        }
+    } catch (error) {
+        console.error('Error generando reporte IA:', error);
+        showModal(`
+            <h2>❌ Error</h2>
+            <p>Error de conexión al generar el reporte</p>
+            <button class="btn-primary" onclick="closeModal()">Cerrar</button>
+        `);
+    }
+}
+
+// Load AI insights for students
+async function loadAIStudentsInsights() {
+    const user = AuthSystem.getCurrentUser();
+    if (!user || user.role !== 'teacher') return;
+    
+    try {
+        const response = await fetch(`/api/ai-class-insights/${user.id}`);
+        const result = await response.json();
+        
+        if (result.success) {
+            const insights = result.insights;
+            showModal(`
+                <h2>🤖 Análisis IA de la Clase</h2>
+                <div style="text-align: left;">
+                    <h3>📊 Rendimiento General</h3>
+                    <p>${insights.performance}</p>
+                    
+                    <h3>⚠️ Estudiantes que Requieren Atención</h3>
+                    <ul>
+                        ${(insights.attention || ['Revisar estudiantes con promedio bajo']).map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                    
+                    <h3>💡 Recomendaciones</h3>
+                    <ul>
+                        ${(insights.recommendations || ['Implementar tutorías', 'Actividades de refuerzo']).map(rec => `<li>${rec}</li>`).join('')}
+                    </ul>
+                    
+                    <h3>🎯 Estrategias Sugeridas</h3>
+                    <ul>
+                        ${(insights.strategies || ['Aprendizaje colaborativo', 'Evaluación formativa']).map(strategy => `<li>${strategy}</li>`).join('')}
+                    </ul>
+                    
+                    <button class="btn-primary" onclick="closeModal()">Cerrar</button>
+                </div>
+            `);
+        }
+    } catch (error) {
+        console.error('Error cargando insights IA:', error);
+    }
+}
+
+// Export students to PDF
+function exportStudentsPDF() {
+    showModal(`
+        <h2>📄 Exportar a PDF</h2>
+        <p>Funcionalidad de exportación disponible en la versión completa.</p>
+        <p>Incluirá:</p>
+        <ul>
+            <li>Lista completa de estudiantes</li>
+            <li>Promedios y estadísticas</li>
+            <li>Gráficos de rendimiento</li>
+            <li>Recomendaciones IA</li>
+        </ul>
+        <button class="btn-primary" onclick="closeModal()">Cerrar</button>
+    `);
+}
+
 // GLOBAL FUNCTION EXPORTS
 // Make functions available globally for HTML onclick handlers
 window.viewStudent = viewStudent;
@@ -1264,3 +1498,8 @@ window.addTask = addTask;
 window.addUser = addUser;
 window.markAttendance = markAttendance;
 window.toggleMobileMenu = toggleMobileMenu;
+window.loadStudentsData = loadStudentsData;
+window.viewStudentDetails = viewStudentDetails;
+window.generateStudentAIReport = generateStudentAIReport;
+window.loadAIStudentsInsights = loadAIStudentsInsights;
+window.exportStudentsPDF = exportStudentsPDF;
