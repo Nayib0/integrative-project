@@ -82,49 +82,80 @@ Learnex is a **next-generation educational platform** that revolutionizes how ed
 ## 📁 Project Structure
 
 ```
-integrative-project/
-│
+📁 INTEGRATIVE-PROJECT/
 ├── backend/
-│   ├── js/
-│   │   ├── app.js              # Main application logic
-│   │   ├── auth.js             # Authentication system
-│   │   ├── basic-functions.js  # Utility functions
-│   │   ├── chatbot.js          # AI chatbot functionality
-│   │   ├── server.js           # Express server configuration
-│   │   ├── tests.js            # Testing utilities
-│   │   └── index.js            # Entry point
-│   │
-│   └── css/
-│       ├── chatbot.css         # Chatbot interface styles
-│       ├── enterprise-styles.css # Enterprise UI components
-│       ├── loading.css         # Loading animations
-│       ├── modern-interface.css # Modern UI design
-│       ├── responsive.css      # Mobile responsiveness
-│       └── styles.css          # General styles
+│ ├── js/
+│ │ ├── analytics-system.js
+│ │ ├── app.js
+│ │ ├── auth.js
+│ │ ├── basic-functions.js
+│ │ ├── chatbot.js
+│ │ ├── enhanced-server.js
+│ │ ├── enhanced-ui.js
+│ │ ├── evaluation-system.js
+│ │ ├── gamification-system.js
+│ │ ├── messaging-client.js
+│ │ ├── messaging-system.js
+│ │ ├── pdf-system.js
+│ │ ├── routes.js
+│ │ ├── schedule-system.js
+│ │ ├── server.js
+│ │ ├── tasks-system.js
+│ │ ├── tests.js
+│ │ ├── vanilla-enhanced.js
+│ │ └── index.js
+│ ├── css/
+│ │ ├── chatbot.css
+│ │ ├── enhanced-v2.css
+│ │ ├── enterprise-styles.css
+│ │ └── loading.css
 │
-├── server/
-│   ├── data/                   # CSV data files
-│   │   ├── 01_users.csv
-│   │   ├── 02_curses.csv
-│   │   ├── 03_subjects.csv
-│   │   ├── 04_curse_subject_teacher.csv
-│   │   ├── 05_notes.csv
-│   │   └── 06_students_curses.csv
-│   │
-│   └── seeders/                # Database seeders
-│       ├── conexion_db.js      # Database connection
-│       ├── load_*.js           # Data loading scripts
-│       └── run_seeders.js      # Seeder execution
+├── css/
+│ ├── messaging-v2.css
+│ ├── modern-interface.css
+│ ├── responsive.css
+│ └── styles.css
 │
 ├── docs/
-│   ├── estructura-navegacion.txt
-│   ├── modelo-entidad-relacion.png
-│   └── script.sql              # Database schema
+│ ├── API_DOCUMENTATION.md
+│ ├── ENDPOINTS.md
+│ ├── estructura-navegacion.txt
+│ ├── extended-schema.sql
+│ ├── modelo-entidad-relacion.png
+│ ├── script.sql
+│ └── TECHNICAL_DOCUMENTATION.md
 │
-├── .env                        # Environment variables
-├── index.html                  # Main HTML file
-├── package.json                # Node.js dependencies
-└── README.md                   # Project documentation
+├── server/
+│ ├── data/
+│ │ ├── 01_users.csv
+│ │ ├── 02_curses.csv
+│ │ ├── 03_subjects.csv
+│ │ ├── 04_curse_subject_teacher.csv
+│ │ ├── 05_notes.csv
+│ │ └── 06_students_curses.csv
+│ ├── seeders/
+│ │ ├── load_curse_subject_teacher.js
+│ │ ├── load_curses.js
+│ │ ├── load_extended_data.js
+│ │ ├── load_notes.js
+│ │ ├── load_students_curses.js
+│ │ ├── load_subjects.js
+│ │ ├── load_users.js
+│ │ └── run_seeders.js
+│ └── conexion_db.js
+│
+├── .env
+├── clean-fix.js
+├── create-teacher-parent-chats.js
+├── fix-session-messaging.js
+├── force-messaging.js
+├── index.html
+├── init-messaging.js
+├── INSTALLATION.md
+├── load-extended-users.js
+├── package-lock.json
+├── package.json
+└── README.md
 ```
 
 ## 🗄️ Database Schema
