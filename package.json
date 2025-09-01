@@ -8,6 +8,7 @@
     "start": "node backend/js/server-sqlite.js",
     "start-postgres": "node backend/js/server-postgres.js",
     "dev": "node backend/js/enhanced-server.js",
+    "sqlite": "node backend/js/server-sqlite.js",
     "original": "node backend/js/server.js",
     "seed": "node server/seeders/run_seeders.js",
     "setup-sqlite": "node database/sqlite-setup.js",
