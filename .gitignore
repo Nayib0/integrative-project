@@ -13,3 +13,4 @@
 .DS_Store
 /docs/ENDPOINTS.md
 /docs/DATABASE_GUIDE.md
+/.env
